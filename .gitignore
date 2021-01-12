@@ -1,0 +1,25 @@
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Vim #
+*.swp 
+
+# Python # 
+*.py[cod] 
+*$py.class 
+
+*.jpg
+
+# SECRETS
+.env
+
+# FILES #
+/media
+/static
+
+Pipfile
+Pipfile.lock

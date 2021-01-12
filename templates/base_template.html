@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% load staticfiles %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <title>
+    {% block title %}
+      Appka Kbc
+    {% endblock title %}
+  </title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+  
+  .male-image{
+  }
+  
+  .female-image{
+  }
+
+  .whiskey-table{
+    background-color:black;
+    margin : 0;
+    padding : 0;
+    border : 0;
+}
+
+    [type=radio] { 
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    /* IMAGE STYLES */
+    [type=radio] + img {
+      cursor: pointer;
+    }
+    
+    /* CHECKED STYLES */
+    [type=radio]:checked + img {
+      outline: 5px solid green;
+    }
+
+    img{
+      width:  100px;
+      height: 100px;
+    }
+
+
+    .table td{
+      text-align : center;
+    }
+
+
+    .marketing .col-lg-4 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .marketing h2 {
+      font-weight: 400;
+    }
+
+    .marketing .col-lg-4 p {
+      margin-right: .75rem;
+      margin-left: .75rem;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="text-center">
+        <h4 class='text-white'>Kaun Banega <b>Laxmi-Pati</b> ?</h4>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+      
+    {% block whiskey %}
+      <h2>Here's the whiskey's image section</h2>
+    {% endblock whiskey %}
+
+    {% block profile %}
+    <div class='container' >
+      <section class="jumbotron text-center bg-primary">
+
+        {% block results %}
+          <h2>Welcome To</h2>
+        {% endblock results %}
+
+          <div class="container">
+            <h1 class="jumbotron-heading">
+              <b>
+                {% block question_title %}
+                  <p class='text-white'>"Laxmi Chits Fund Member's Unit Test."</p>
+                {% endblock question_title %}
+              </b>
+            </h1>
+            {% block additional_text %}
+              <p class="lead text-dark">All are gangster until the real one comes in.</p>
+            {% endblock additional_text %}
+          </div>
+      </section>
+    </div >
+    {% endblock profile %}
+
+    <div class="container marketing">
+      {% block body_block %}
+        This is the default body_block section
+      {% endblock body_block %}
+    </div>
+
+  </main>
+
+  <footer class="text-muted">
+    <br>
+    <div class="text-center text-muted bg-dark">
+      <p>
+        <small class='text-muted'>
+          © Site by - <span class='text-light'>shubhansh7777@gmail.com</span>
+        </small>
+      </p>
+      </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
+

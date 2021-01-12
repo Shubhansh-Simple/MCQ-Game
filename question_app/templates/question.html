@@ -1,0 +1,141 @@
+{% extends 'base_template.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  Sawal {{ question.question_number }}
+{% endblock title %}
+ 
+<!--Semen image movement algorithm.-->
+{% block whiskey %}
+<div class='table-responsive' >
+  <table class='table whiskey-table'> 
+    <tr>
+      
+      <!--Male Pug Image-->
+      <td class='male-image'>
+        <img src="{% static 'male.jpeg' %}" alt='Male Pug' style="display:block ; height:45px ; width:35px" >
+      </td>
+      
+      <!--Algorithm-->
+      {% for no_of_column in question.total_questions %}
+
+        <!--Semen Location.-->
+        {% if forloop.counter0 == user.correct_answers %}
+          <td class='text-warning' >
+              <small>{{forloop.counter0}}</small>
+             <img src="{% static 'semen.png' %}" alt='Sperm Image' style="height:45px ; width:65px" >
+          </td>
+        {% else %}
+          <td class='text-light'>
+            <b>{{forloop.counter0}}</b>
+          </td>
+        {% endif %}
+      {% endfor %}
+      
+      <!--Female Pug Image-->
+      <td class='female-image'>
+        <img src="{% static 'female.jpg' %}" alt='Female Pug' style="display:block; height:45px ; width:35px" >
+      </td>
+
+    </tr>
+  </table>
+</div>
+<!--whiskey-table-->
+  <div class='text-center whiskey-table text-warning'>
+    <b>Sperm Progress Radar</b>
+  </div>
+<br>
+{% endblock whiskey %}
+
+<!--MESSAGES-->
+{% block results %}
+  {% if messages %}
+    <div class=" text-center messages">
+        {% for message in messages %}
+        	<p  {% if message.tags %} 
+              class="bg-{{ message.tags }} text-dark" 
+              {% endif %}> 
+              {{ message }} 
+            </p>
+        {% endfor %}
+    </div>
+    <br>
+  {% endif %}
+{% endblock results %}
+
+{% block question_title %}
+
+  <div class='text-center'>
+    {% if question.question_image %}
+      <img class='rounded-circle' src='{{ question.question_image.url }}' 
+           alt='Question Picture' width=160 , height=160>
+    {% endif %}
+    <br>
+    {{ question.question_title }}
+  </div>
+{% endblock question_title %}
+
+{% block additional_text %}
+  <p class='text-dark'>
+    Sawal      - {{ question.question_number }}
+    <br>
+    Contestent - {{ user.username|title }}
+    <br>
+    Prize - {{ user.winning_prize }} 
+  </p>
+{% endblock additional_text %}
+
+{% block body_block %}
+
+<section class="jumbotron text-center bg-dark">
+  <div class="container">
+    <form action="{% url 'form_processing' question.id %}" method="POST">
+      {% csrf_token %}
+      <table class="table-responsive">
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="image_selected" value="A" >
+              <img class="img-fluid"  src="{{ question.option_one_image.url }}" required > 
+            </label>
+          </td>
+          <td>
+            <label>
+              <input type="radio" name="image_selected" value="B" >
+              <img class="img-fluid"  src="{{ question.option_two_image.url }}" required > 
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="image_selected" value="C" >
+              <img class="img-fluid"  src="{{ question.option_three_image.url }}" required > 
+            </label>
+          </td>
+          <td>
+            <label>
+              <input type="radio" name="image_selected" value="D" >
+              <img class="img-fluid"  src="{{ question.option_four_image.url }}" required > 
+            </label>
+          </td>
+        </tr>
+        
+        <!--Form Submit Button-->
+        <tr>
+          <td>
+            <!--href to the next page or nothing else-->
+            <input class='btn btn-danger' name='image_selected' type='submit' value='Skip Kiya Jaye'>
+          </td>
+          <td>
+            <input class='btn btn-success' type='submit' value='Lock Kiya Jaye'>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</section>
+
+{% endblock body_block %}
+
+

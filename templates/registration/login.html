@@ -1,0 +1,24 @@
+{% extends 'base_template.html' %}
+
+{% block whiskey %}
+<br>
+{% endblock whiskey %}
+
+
+{% block body_block %}
+  <div class='text-center bg-warning'>
+    <h2>Login</h2>
+    <p>
+      <small class='text-danger' >(Contact Developer if you don't have any account)</small>
+    </p>
+
+    <form method='post'>
+      {% csrf_token %}
+      <b>{{ form.as_p }}</b>
+      <button type='submit' class='btn btn-primary'>Log In</button>
+    </form>
+
+  </div>
+
+{% endblock body_block %}
+
