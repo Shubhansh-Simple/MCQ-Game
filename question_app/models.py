@@ -81,6 +81,7 @@ class Question( models.Model ):
 
 
     def save( self,*args,**kwargs ):
+        '''Resize image before saving.'''
 
         if not self.answer.isupper():
             self.answer = self.answer.upper()
@@ -114,6 +115,6 @@ class Question( models.Model ):
 
 
     def __str__( self ):
-        return str( self.question_number ) + '.) '+ str( self.question_title )
+        return str( self.question_number ) + '.) ' + str( self.question_title )
 
 

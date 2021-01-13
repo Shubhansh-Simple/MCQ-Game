@@ -55,7 +55,7 @@
         	<p  {% if message.tags %} 
               class="bg-{{ message.tags }} text-dark" 
               {% endif %}> 
-              {{ message }} 
+              {{ message }}
             </p>
         {% endfor %}
     </div>
@@ -71,17 +71,17 @@
            alt='Question Picture' width=160 , height=160>
     {% endif %}
     <br>
-    {{ question.question_title }}
+    <h3>Q. {{ question.question_title }} ?</h3>
   </div>
 {% endblock question_title %}
 
 {% block additional_text %}
-  <p class='text-dark'>
+  <p class='text-light'>
     Sawal      - {{ question.question_number }}
     <br>
     Contestent - {{ user.username|title }}
     <br>
-    Prize - {{ user.winning_prize }} 
+    Paytm Cash- {{ user.winning_prize }} rupeej 
   </p>
 {% endblock additional_text %}
 

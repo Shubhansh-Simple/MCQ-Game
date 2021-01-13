@@ -1,0 +1,73 @@
+{% extends 'base_template.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  Result Page
+{% endblock title %}
+
+
+{% block whiskey %}
+<br>
+{% endblock whiskey %}
+
+<!--MESSAGES-->
+{% block results %}
+  {% if messages %}
+    <div class=" text-center messages">
+        {% for message in messages %}
+        	<p  {% if message.tags %} 
+              class="bg-{{ message.tags }} text-dark" 
+              {% endif %}> 
+              {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+    <br>
+  {% endif %}
+{% endblock results %}
+
+
+{% block question_title %}
+  <p class='text-white'>Results of {{ user.username }}</p>
+{% endblock question_title %}
+
+{% block additional_text %}
+  <div class='text-white bg-dark'>
+    <table class='table-responsive table-bordered'>
+      <tr>
+        <td>Paytm Cash</td>
+        <td> {{ user.winning_prize }} rupeej </td>
+      </tr>
+      <tr>
+        <td> Sahi Jawabs</td>
+        <td> <b class='text-success'>{{ user.correct_answers }}</b>/{{ total_questions }} </td>
+      </tr>   
+      <tr>
+        <td> Skip questions </td>
+        <td> {{ user.skip_quesiton }} </td>
+      </tr>
+    </table>
+  </div>
+{% endblock additional_text %}
+
+
+{% block body_block %}
+  <div class='text-center bg-warning'>
+    <h2>Login</h2>
+    <p>
+      <small class='text-danger' >(Contact Developer if you don't have any account)</small>
+    </p>
+
+    <form method='post'>
+      {% csrf_token %}
+      <b>{{ form.as_p }}</b>
+      <button type='submit' class='btn btn-primary'>Log In</button>
+    </form>
+
+  </div>
+
+{% endblock body_block %}
+
+
+
+
