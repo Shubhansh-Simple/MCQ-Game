@@ -28,23 +28,23 @@
 
 
 {% block question_title %}
-  <p class='text-white'>Results of {{ user.username }}</p>
+  <p class='text-white'>Result of {{ user.username }}</p>
 {% endblock question_title %}
 
 {% block additional_text %}
   <div class='text-white bg-dark'>
-    <table class='table-responsive table-bordered'>
+    <table class='table'>
       <tr>
         <td>Paytm Cash</td>
         <td> {{ user.winning_prize }} rupeej </td>
       </tr>
       <tr>
-        <td> Sahi Jawabs</td>
+        <td> Total Sahi Jawab</td>
         <td> <b class='text-success'>{{ user.correct_answers }}</b>/{{ total_questions }} </td>
       </tr>   
       <tr>
         <td> Skip questions </td>
-        <td> {{ user.skip_quesiton }} </td>
+        <td> <b class='text-danger'>{{ user.skip_question.all|length }} </b> </td>
       </tr>
     </table>
   </div>
@@ -52,19 +52,67 @@
 
 
 {% block body_block %}
-  <div class='text-center bg-warning'>
-    <h2>Login</h2>
-    <p>
-      <small class='text-danger' >(Contact Developer if you don't have any account)</small>
-    </p>
 
-    <form method='post'>
-      {% csrf_token %}
-      <b>{{ form.as_p }}</b>
-      <button type='submit' class='btn btn-primary'>Log In</button>
-    </form>
-
+  <!--Game's Policy Bootstrap Modal-->
+  <div class="container">
+    <!-- Trigger the modal with a button -->
+  
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content bg-white">
+          <div class="modal-header">
+            <h4 class="modal-title">Hidden Policy ;)</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body bg-white">
+  		  <ul class="list-group bg-dark">
+  			 <li class="list-group-item text-white bg-dark">
+                 Aapse fund <b>Laxmi Chits fund </b> meh automatically invest ho gye h
+               </li>
+  			 <li class="list-group-item text-white bg-dark">
+                 25 din baad double dhanrashi paaye.
+               </li>
+  		  </ul> 
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!--Pregnancy Check Table.-->
+
+  <div class='text-center bg-warning'>
+    <h3>Prega News Pregnancy Test.</h3>
+    <div class='text-white bg-dark container'>
+      <table class='table'>
+        <tr>
+          <td>Pregnant </td>
+          {% if user.is_pregnant %}
+            <td class='bg-success'>  
+          {% else %}
+            <td class='bg-danger'>  
+          {% endif %}
+              {{ user.is_pregnant }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <button type="button" class="btn btn-danger btn-lg btn-white" data-toggle="modal" data-target="#myModal">
+              Withdrawl 
+            </button>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+    <br>
+  </div>
+
+
+
 
 {% endblock body_block %}
 

@@ -18,7 +18,7 @@ class CustomUser( AbstractUser ):
                                         )
 
     correct_answers  = models.PositiveSmallIntegerField( default=0 )
-    skip_quesiton    = models.ManyToManyField( Question, blank=True )
+    skip_question    = models.ManyToManyField( Question, blank=True )
     winning_prize    = models.PositiveSmallIntegerField( default=0 )
     is_complete_quiz = models.BooleanField( default=False )
 
@@ -29,6 +29,15 @@ class CustomUser( AbstractUser ):
     @property
     def increase_winning_prize( self ):
         self.winning_prize += 10
+
+    @property
+    def is_pregnant( self ):
+        '''Check whether whiskey pregnant or not.'''
+
+        if self.correct_answers >= ( Question.objects.all().count() - 4 ):
+            return True
+        return False
+
 
     def __str__( self ):
         return str( self.username ).capitalize()

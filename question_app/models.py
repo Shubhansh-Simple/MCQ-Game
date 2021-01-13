@@ -50,7 +50,8 @@ class Question( models.Model ):
 
     @property
     def total_questions( self ):
-        '''For counting no.of question in models.''' 
+        '''Count total no.of questions for {%forloop%}.''' 
+
         total_question_count = Question.objects.all().count() 
         forloop_iter         = list( range( total_question_count + 1 ) )
         return forloop_iter
