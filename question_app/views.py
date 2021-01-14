@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth            import get_user_model
 from django.contrib.auth.mixins     import LoginRequiredMixin
 
+from django.http                    import HttpResponse
+
 from django.contrib                 import messages
 from django.http                    import Http404
 from django.shortcuts               import get_object_or_404,render,redirect
@@ -28,6 +30,8 @@ def QuestionPage( request, question_id=None ):
     if question_id:
         obj_numbering = get_object_or_404( Numbering, question_number=question_id )
         obj           = get_object_or_404( Question,  question_number=obj_numbering )
+
+        #request.user.is_complete_quiz = True 
         
         context       = { 'question' : obj }
 
@@ -74,7 +78,10 @@ def FormProcessing( request, question_id=None ):
         user_login.save()
         
         # result page if it's last question.
-        if question_id == 1: return redirect( 'ResultView' ) 
+        if question_id == 1:
+            '''is_complete_quiz have to true'''
+            # try-except for 0 question number
+            return redirect( 'ResultView' ) 
 
         return redirect( '/question/{}/'.format(question_id-1) )
 
@@ -87,10 +94,9 @@ class ResultView( LoginRequiredMixin,TemplateView ):
 
     template_name = 'user_result.html'
 
+
     def get_context_data( self,**kwargs ):
         context                     = super().get_context_data( **kwargs )
         context['total_questions']   = Question.objects.all().count()
         return context
-
-
  

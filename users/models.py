@@ -22,14 +22,22 @@ class CustomUser( AbstractUser ):
     winning_prize    = models.PositiveSmallIntegerField( default=0 )
     is_complete_quiz = models.BooleanField( default=False )
 
+    
+    @property
+    def total_skip_question( self ):
+        return self.skip_question.all().count()
+
+    
     @property
     def increase_correct_answers( self ):
         self.correct_answers += 1
 
+    
     @property
     def increase_winning_prize( self ):
         self.winning_prize += 10
 
+    
     @property
     def is_pregnant( self ):
         '''Check whether whiskey pregnant or not.'''
