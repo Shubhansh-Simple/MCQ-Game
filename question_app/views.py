@@ -3,8 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth            import get_user_model
 from django.contrib.auth.mixins     import LoginRequiredMixin
 
-from django.http                    import HttpResponse
-
 from django.contrib                 import messages
 from django.http                    import Http404
 from django.shortcuts               import get_object_or_404,render,redirect
@@ -27,17 +25,25 @@ class TermsConditionView( TemplateView ):
 def QuestionPage( request, question_id=None ):
     '''Show Detail Page with messages.'''
 
-    if question_id:
-        obj_numbering = get_object_or_404( Numbering, question_number=question_id )
+    if type(question_id):
+        try:
+            obj_numbering = Numbering.objects.get( question_number=question_id )
+        except Numbering.DoesNotExist:
+
+            print( 'Inside of except block.')
+            if question_id == 0:
+
+                '''is_complete_quiz have to true'''
+                #request.user.is_complete_quiz = True 
+                return redirect( 'result' ) 
+
+            raise Http404('I think its the zero id.')
+
         obj           = get_object_or_404( Question,  question_number=obj_numbering )
-
-        #request.user.is_complete_quiz = True 
-        
         context       = { 'question' : obj }
-
         return render( request , 'question.html' ,context=context)
     else:
-        raise Http404('Page Not Found.')
+        raise Http404('Second exception of the statement.')
 
 
 @login_required()
@@ -73,17 +79,11 @@ def FormProcessing( request, question_id=None ):
             messages.info( request,'Aapki phat k chaar!')
             
             # skip question many2many
-            user_login.skip_quesiton.add( obj ) 
+            user_login.skip_question.add( obj ) 
 
         user_login.save()
         
-        # result page if it's last question.
-        if question_id == 1:
-            '''is_complete_quiz have to true'''
-            # try-except for 0 question number
-            return redirect( 'ResultView' ) 
-
-        return redirect( '/question/{}/'.format(question_id-1) )
+        return redirect( 'question', question_id=question_id-1 )
 
     else:
         raise Http404('Invalid Data.')
@@ -93,7 +93,6 @@ class ResultView( LoginRequiredMixin,TemplateView ):
     '''Showing the logged-in user's result page.'''
 
     template_name = 'user_result.html'
-
 
     def get_context_data( self,**kwargs ):
         context                     = super().get_context_data( **kwargs )

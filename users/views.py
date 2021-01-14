@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from .models     import CustomUser
-#import pandas    as     pd
 
 
 def DataAnalysis( request ):
+    '''Send required data to template to show the graph'''
 
     username_list        = []
     correct_answers_list = []
