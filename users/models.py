@@ -42,7 +42,7 @@ class CustomUser( AbstractUser ):
     def is_pregnant( self ):
         '''Check whether whiskey pregnant or not.'''
 
-        if self.correct_answers >= ( Question.objects.all().count() - 4 ):
+        if self.correct_answers >= Question.objects.passing_pushes:
             return True
         return False
 

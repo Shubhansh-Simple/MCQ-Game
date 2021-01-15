@@ -16,11 +16,6 @@ class QuestionManager( models.Manager ):
 
         return round( self.total_questions - self.total_questions/4 )
 
-    @property
-    def total_questions_list( self ):
-        '''Return a (counting list of total questions +1) starts with 0''' 
-
-        return list( range( self.total_questions + 1 ) )
 
 
 class Numbering( models.Model ):
@@ -66,20 +61,20 @@ class Question( models.Model ):
 
     objects = QuestionManager()
 
-    '''
+
     @property
-    def next_question( self ):
-        return self.id + 1
+    def total_questions_list( self ):
+        '''Return a (counting list of total questions +1) starts with 0''' 
 
-    '''
+        return list( range( Question.objects.total_questions + 1 ) )
 
 
-    def image_resize( self, image_read, height, width, image_name ):
+    def image_resize( self, image_read, dimensions, image_name ):
         '''Resizing image using PIL then return the modified image'''
 
         if image_read:
             img            = Img.open( BytesIO( image_read ) )
-            img_resize     = img.resize( (height,width) )
+            img_resize     = img.resize( dimensions )
             modified_image = BytesIO() # image storage memory
 
             img_resize.save( modified_image , format='JPEG' )
@@ -106,26 +101,26 @@ class Question( models.Model ):
 
         if self.question_image:
             self.question_image = self.image_resize( self.question_image.read(),
-                                                     200,200 ,
+                                                     (200,200) ,
                                                      self.question_image.name 
                                                    )
 
         self.option_one_image   = self.image_resize( self.option_one_image.read(),
-                                                     100,100,
+                                                     (100,100),
                                                      self.option_one_image.name 
                                                    )
 
         self.option_two_image   = self.image_resize( self.option_two_image.read(),
-                                                     100,100,
+                                                     (100,100),
                                                      self.option_two_image.name 
                                                    )
 
         self.option_three_image = self.image_resize( self.option_three_image.read(),
-                                                     100,100,
+                                                     (100,100),
                                                      self.option_three_image.name 
                                                    )
         self.option_four_image  = self.image_resize( self.option_four_image.read(),
-                                                     100,100,
+                                                     (100,100),
                                                      self.option_four_image.name 
                                                    )
         

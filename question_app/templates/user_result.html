@@ -31,6 +31,7 @@
   <p class='text-white'>Result of {{ user.username }}</p>
 {% endblock question_title %}
 
+<!--Loged-In User Result-->
 {% block additional_text %}
   <div class='text-white bg-dark'>
     <table class='table'>
@@ -83,29 +84,40 @@
   </div>
 
   <!--Pregnancy Check Table.-->
-
-  <div class='text-center bg-warning'>
+  <div class='text-center bg-warning container-fluid'>
     <h3>Prega News Pregnancy Test.</h3>
     <div class='text-white bg-dark container'>
       <table class='table'>
         <tr>
-          <td>Pregnant </td>
-          {% if user.is_pregnant %}
-            <td class='bg-success'>  
-          {% else %}
-            <td class='bg-danger'>  
-          {% endif %}
-              {{ user.is_pregnant }}
+          <td>Pregnant</td>
+          <td>
+            {% if user.is_pregnant %}
+            <p class='bg-success'>Success</p>
+            {% else %}
+            <p class='bg-danger'>Failed!</p>
+            {% endif %}
           </td>
         </tr>
         <tr>
-          <td colspan=2>
-            <button type="button" class="btn btn-danger btn-lg btn-white" data-toggle="modal" data-target="#myModal">
-              Withdrawl 
-            </button>
+          <td>
+            <h3>What's<br> Next <br> ?</h3>
           </td>
-        </tr>
+          <td>
+            {% if user.is_pregnant %}
+              <img src="{% static 'female_kid.jpeg' %}">
+            {% else %}
+              <img src="{% static 'pug_sex.jpeg' %}">
+            {% endif %}
+          </td>
+            </tr>
 
+            <tr>
+              <td colspan=2>
+                <button type="button" class="btn btn-warning btn-lg text-dark" data-toggle="modal" data-target="#myModal">
+                  Withdrawl 
+                </button>
+              </td>
+            </tr>
       </table>
     </div>
     <br>

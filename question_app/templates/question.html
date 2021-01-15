@@ -5,46 +5,57 @@
   Sawal {{ question.question_number }}
 {% endblock title %}
  
-<!--Semen image movement algorithm.-->
+<!--Semen image movement section.-->
 {% block whiskey %}
-<div class='table-responsive' >
-  <table class='table whiskey-table'> 
-    <tr>
-      
-      <!--Male Pug Image-->
-      <td class='male-image'>
-        <img src="{% static 'male.jpeg' %}" alt='Male Pug' style="display:block ; height:45px ; width:35px" >
-      </td>
-      
-      <!--Algorithm-->
-      {% for no_of_column in question.total_questions_list %}
+  <div class='table-responsive' >
+    <table class='table whiskey-table'> 
+      <tr>
+        
+        <!--Male Pug Image-->
+        <td class='male-image'>
 
-        <!--Semen Location.-->
-        {% if forloop.counter0 == user.correct_answers %}
-          <td class='text-warning' >
-             <img src="{% static 'semen.png' %}" alt='Sperm Image' style="height:45px ; width:65px" >
-          </td>
-        {% else %}
-          <td class='text-light'>
-            <b>{{forloop.counter0}}</b>
-          </td>
-        {% endif %}
-      {% endfor %}
-      
-      <!--Female Pug Image-->
-      <td class='female-image'>
-        <img src="{% static 'female.jpg' %}" alt='Female Pug' style="display:block; height:45px ; width:35px" >
-      </td>
+          <!--IMAGE-->
+          <img src="{% static 'male.jpeg' %}" 
+            alt='Male Pug'
+            style="display:block ; height:45px ; width:35px" >
+        </td>
+        
+        <!--Algorithm-->
+        {% for no_of_column in question.total_questions_list %}
 
-    </tr>
-  </table>
-</div>
-<!--whiskey-table-->
-  <div class='text-center whiskey-table text-warning'>
-    <b>Sperm Progress Radar</b>
+          <!--Semen Location.-->
+          {% if forloop.counter0 == user.correct_answers %}
+            <td>
+               <!--IMAGE-->
+               <img src="{% static 'semen.png' %}" 
+                 alt='Sperm Image'
+                 style="height:45px ; width:65px" >
+            </td>
+          {% else %}
+            <td class='text-light'>
+              <b>{{forloop.counter0}}</b>
+            </td>
+          {% endif %}
+        {% endfor %}
+        
+        <!--Female Pug Image-->
+        <td class='female-image'>
+
+          <!--IMAGE-->
+          <img src="{% static 'female.jpg' %}" 
+            alt='Female Pug'
+            style="display:block; height:45px ; width:35px" >
+        </td>
+      </tr>
+    </table>
   </div>
-<br>
+
+  <!--whiskey-table-->
+  <div class='text-center whiskey-table text-muted'>
+    <p><b class='text-success'>Semen Progress Radar</b></p>
+  </div>
 {% endblock whiskey %}
+<!--Semen image movement section finish.-->
 
 <!--MESSAGES-->
 {% block results %}
@@ -80,27 +91,29 @@
     <br>
     Contestent - {{ user.username|title }}
     <br>
+    Required Pushes - {{ passing_pushes }}
   </p>
 {% endblock additional_text %}
 
 {% block body_block %}
 
 <section class="jumbotron text-center bg-dark">
-  <div class="container">
+  <div class="container table-responsive">
     <form action="{% url 'form_processing' question.id %}" method="POST">
       {% csrf_token %}
-      <table class="table-responsive">
+      <h2 class='text-white'>Options</h2>
+      <table class="table">
         <tr>
           <td>
             <label>
               <input type="radio" name="image_selected" value="A" >
-              <img class="img-fluid"  src="{{ question.option_one_image.url }}" required > 
+              <img class="img-fluid"  src="{{ question.option_one_image.url }}"  > 
             </label>
           </td>
           <td>
             <label>
               <input type="radio" name="image_selected" value="B" >
-              <img class="img-fluid"  src="{{ question.option_two_image.url }}" required > 
+              <img class="img-fluid"  src="{{ question.option_two_image.url }}"  > 
             </label>
           </td>
         </tr>
@@ -108,13 +121,13 @@
           <td>
             <label>
               <input type="radio" name="image_selected" value="C" >
-              <img class="img-fluid"  src="{{ question.option_three_image.url }}" required > 
+              <img class="img-fluid"  src="{{ question.option_three_image.url }}"  > 
             </label>
           </td>
           <td>
             <label>
               <input type="radio" name="image_selected" value="D" >
-              <img class="img-fluid"  src="{{ question.option_four_image.url }}" required > 
+              <img class="img-fluid"  src="{{ question.option_four_image.url }}"  > 
             </label>
           </td>
         </tr>
