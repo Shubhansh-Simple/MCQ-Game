@@ -5,18 +5,21 @@
 {% endblock whiskey %}
 
 
+    <!--class="p-5 text-center bg-image"-->
 {% block body_block %}
-  <div class='text-center bg-warning'>
-    <h2>Login</h2>
+  <div id='login_section_id' class='text-center bg-warning form-group' >
+    <br>
+    <h2 class='text-dark'>Login</h2>
     <p>
-      <small class='text-danger' >(Contact Developer if you don't have any account)</small>
+      <small class='text-dark' >(Contact Developer if you don't have any account)</small>
     </p>
 
     <form method='post'>
       {% csrf_token %}
       <b>{{ form.as_p }}</b>
-      <button type='submit' class='btn btn-primary'>Log In</button>
+      <button type='submit' class='btn btn-success'>Play Game</button>
     </form>
+    <br>
 
   </div>
 

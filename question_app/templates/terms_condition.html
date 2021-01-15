@@ -9,7 +9,7 @@
 
 {% block body_block %}
 
-<h3 class='text-dark text-center'>Whiskey needs 4 pushes.</h3>
+<h3 class='text-dark text-center'>Whiskey needs {{ question.passing_pushes }} pushes.</h3>
 <div class="container  text-center bg-warning">
   
   <div class='container text-center'>
@@ -55,11 +55,11 @@
 		  </ul> 
         </div>
         <div class="modal-footer">
-          <a class="btn btn-default btn-success" href="{% url 'question' last_question %}">
-            Accept
+          <a class="btn btn-default btn-success" href="{% url 'question' question.total_questions %}">
+            Accept Ki Jaye
           </a>
-          <a class="btn btn-default btn-danger" href="{% url 'logout' %}">
-            Reject
+          <a class="btn btn-default btn-danger" href="{% url 'logout' %}#login_section_id">
+            Reject Ki Jaye
           </a>
         </div>
       </div>
@@ -74,7 +74,7 @@
     <p> <b class='text-danger'>Note:</b> Accept button pr click krne se aap hmari sari terms and conditions maan rhe h (Samjhe baa).</p>
 
   <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal">
-    Check
+    Check Kiya Jaye
   </button>
 
     <div class='container'>

@@ -3,7 +3,28 @@ from PIL                            import Image as Img
 from io                             import BytesIO 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
+
+class QuestionManager( models.Manager ):
+    
+    @property
+    def total_questions( self ):
+        return Question.objects.all().count()
+
+    @property
+    def passing_pushes( self ):
+        '''Decides the passing marks'''
+
+        return round( self.total_questions - self.total_questions/4 )
+
+    @property
+    def total_questions_list( self ):
+        '''Return a (counting list of total questions +1) starts with 0''' 
+
+        return list( range( self.total_questions + 1 ) )
+
+
 class Numbering( models.Model ):
+    '''For re-arranging the question order in future'''
 
     question_number = models.PositiveIntegerField()
     
@@ -43,18 +64,14 @@ class Question( models.Model ):
                                             help_text='Enter right answer - A,B,C,D'
                                          )
 
+    objects = QuestionManager()
+
+    '''
     @property
     def next_question( self ):
         return self.id + 1
 
-
-    @property
-    def total_questions( self ):
-        '''Count total no.of questions for {%forloop%}.''' 
-
-        total_question_count = Question.objects.all().count() 
-        forloop_iter         = list( range( total_question_count + 1 ) )
-        return forloop_iter
+    '''
 
 
     def image_resize( self, image_read, height, width, image_name ):

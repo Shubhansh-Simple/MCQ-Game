@@ -9,15 +9,14 @@ from django.shortcuts               import get_object_or_404,render,redirect
 from .models                        import Question,Numbering
 
 
-#@login_required()
-class TermsConditionView( TemplateView ):
+class TermsConditionView( LoginRequiredMixin,TemplateView ):
     '''Terms and conditions page.'''
 
     template_name = 'terms_condition.html'
 
     def get_context_data( self,**kwargs ):
         context                     = super().get_context_data( **kwargs )
-        context['last_question']   = Question.objects.last().question_number.question_number
+        context[ 'question' ]       = Question.objects
         return context
 
 
@@ -28,22 +27,23 @@ def QuestionPage( request, question_id=None ):
     if type(question_id):
         try:
             obj_numbering = Numbering.objects.get( question_number=question_id )
-        except Numbering.DoesNotExist:
 
-            print( 'Inside of except block.')
+        except Numbering.DoesNotExist:
+            '''Extra work for result page.'''
+
             if question_id == 0:
 
                 '''is_complete_quiz have to true'''
                 #request.user.is_complete_quiz = True 
                 return redirect( 'result' ) 
 
-            raise Http404('I think its the zero id.')
+            raise Http404('Question Not Found')
 
         obj           = get_object_or_404( Question,  question_number=obj_numbering )
         context       = { 'question' : obj }
         return render( request , 'question.html' ,context=context)
     else:
-        raise Http404('Second exception of the statement.')
+        raise Http404('Question Not Found')
 
 
 @login_required()

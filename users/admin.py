@@ -16,7 +16,7 @@ class CustomUserAdmin( UserAdmin ):
                              {'fields' :  ( 'profile_pic',
                                             'correct_answers',
                                             'winning_prize',
-                                            'skip_quesiton',
+                                            'skip_question',
                                             'is_complete_quiz' 
                                           ), 
                              }
