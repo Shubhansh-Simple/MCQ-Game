@@ -22,8 +22,8 @@ class TermsConditionView( LoginRequiredMixin,TemplateView ):
 def QuestionPage( request, question_id=None ):
     '''Show Detail Page with messages.'''
 
-    if type(question_id):
-        if not request.user.is_complete_quiz:
+    if not request.user.is_complete_quiz:
+        if type(question_id):
             try:
                 obj_numbering = Numbering.objects.get( question_number=question_id )
 
@@ -31,8 +31,8 @@ def QuestionPage( request, question_id=None ):
                 '''Extra work for result page.'''
 
                 if question_id == 0:
-
                     '''is_complete_quiz have to true'''
+
                     request.user.is_complete_quiz = True 
                     request.user.save()
                     return redirect( 'result' ) 
@@ -43,10 +43,10 @@ def QuestionPage( request, question_id=None ):
             context       = { 'question' : question_obj,
                               'passing_pushes' : Question.objects.passing_pushes 
                             }
-
             return render( request , 'question.html' ,context=context)
-        raise Http404('You can\'t play the game twice.')
-    raise Http404('Question Not Found')
+
+        raise Http404('Question Not Found')
+    raise Http404('You can\'t play the game twice.')
 
 
 @login_required()
