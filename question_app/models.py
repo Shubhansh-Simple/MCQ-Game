@@ -3,6 +3,37 @@ from PIL                            import Image as Img
 from io                             import BytesIO 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
+class CustomResizeImage():
+    '''Helper Class - To resize the image in memory with given ratio.'''
+
+    def image_resize( self, image_read, dimensions, image_name ):
+        '''Resizing image in memory using PIL then return the modified image'''
+
+        if image_read:
+            img            = Img.open( BytesIO( image_read ) )
+            
+            # png to jpg
+            if img.mode in ( 'RGBA','P' ):
+                img        = img.convert('RGB')
+
+            img_resize     = img.resize( dimensions )
+            modified_image = BytesIO() # image storage memory
+
+            img_resize.save( modified_image , format='JPEG' )
+
+            modified_image.seek(0)
+
+            return InMemoryUploadedFile(
+                    modified_image,
+                    'ImageField',
+                    "%s.jpg" %image_name,
+                    'image/jpeg',
+                    modified_image.getbuffer().nbytes,
+                    None
+                )        
+        else:
+            return None
+
 
 class QuestionManager( models.Manager ):
     
@@ -27,7 +58,8 @@ class Numbering( models.Model ):
         return str( self.question_number )
 
 
-class Question( models.Model ):
+class Question( models.Model,CustomResizeImage ):
+    '''Kbc like question model - Question title and Option as images.'''
 
     ANSWER = ( 
             ('A','A'),
@@ -69,30 +101,6 @@ class Question( models.Model ):
         return list( range( Question.objects.total_questions + 1 ) )
 
 
-    def image_resize( self, image_read, dimensions, image_name ):
-        '''Resizing image using PIL then return the modified image'''
-
-        if image_read:
-            img            = Img.open( BytesIO( image_read ) )
-            img_resize     = img.resize( dimensions )
-            modified_image = BytesIO() # image storage memory
-
-            img_resize.save( modified_image , format='JPEG' )
-
-            modified_image.seek(0)
-
-            return InMemoryUploadedFile(
-                    modified_image,
-                    'ImageField',
-                    "%s.jpg" %image_name,
-                    'image/jpeg',
-                    modified_image.getbuffer().nbytes,
-                    None
-                )        
-        else:
-            return None
-
-
     def save( self,*args,**kwargs ):
         '''Resize image before saving.'''
 
@@ -100,6 +108,9 @@ class Question( models.Model ):
             self.answer = self.answer.upper()
 
         if self.question_image:
+
+            '''Since it's optional'''
+
             self.question_image = self.image_resize( self.question_image.read(),
                                                      (200,200) ,
                                                      self.question_image.name 
