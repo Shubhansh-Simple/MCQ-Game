@@ -1,0 +1,54 @@
+<!--User/templates/user_list.html-->
+
+{% extends 'base_template.html' %}
+
+{% block title %}
+  User List
+{% endblock title %}
+
+
+{% block remaining_content %}
+{% endblock remaining_content %}
+
+{% block whiskey %}
+{% endblock whiskey %}
+
+{% block profile %}
+
+  {% block results %}
+  {% endblock results %}
+  
+  {% block question_title %}
+  {% endblock question_title %}
+  
+  {% block additional_text %}
+  {% endblock additional_text %}
+
+{% endblock profile %}
+
+{% block body_block %}
+
+<br>
+<section class="jumbotron text-center bg-dark">
+  <div class="container table-responsive">
+    <h2 class='text-white'>Candidates</h2>
+    <table class="table text-white">
+        {% for user in user_list %}
+      <tr>
+        <td>
+          <a href="{% url 'user_detail' user.id %}">
+            <!-- <img class="img-fluid"  src=""> -->
+              <h4>{{ user.username|title }}</h4>
+          </a>
+        </td>
+      </tr>
+        {% endfor %}
+    </table>
+  </div>
+</section>
+
+
+{% endblock body_block %}
+
+
+
