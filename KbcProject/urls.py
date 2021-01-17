@@ -7,9 +7,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # local apps calling
-    path('',                    include('question_app.urls')        ),
-    path('accounts/',           include('django.contrib.auth.urls') ),
-    path('users/',            include('users.urls') ),
+    path('',          include('question_app.urls')        ),
+    path('accounts/', include('django.contrib.auth.urls') ),
+    path('users/',    include('users.urls') ),
 
    # for accessing media file urls.
 ]+ static( settings.MEDIA_URL , document_root=settings.MEDIA_ROOT )

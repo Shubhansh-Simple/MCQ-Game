@@ -31,38 +31,48 @@
 <br>
 <section class="jumbotron text-center bg-warning">
   <div class="container table-responsive">
-    <h2 class='text-dark'>Skipped Question</h2>
+    <h4 class='text-dark'>Skipped Question Of {{ user_obj.username|title }}</h4>
     <table class="table text-secondary ">
-      {% if user_obj.skip_question.all.count %}
-        {% for skip_question in  user_obj.skip_question.all %}
-        <tr>
-          <td>
-            <h4>
-              Q.{{ skip_question.question_number }} 
-            </h4>
-          </td>
-          <td>
-            <h4>{{ skip_question.question_title }}</h4>
-          </td>
-        </tr>
-        {% endfor %}
-        <tr>
-          <td colspan=2>
-            <h3 class='text-dark'>
-              Total Skips - {{ user_obj.total_skip_question }}
-            </h3>
-          </td>
-        </tr>
+      {% if user_obj.is_complete_quiz %}
+        {% if user_obj.skip_question.all.count %}
+          {% for skip_question in  user_obj.skip_question.all %}
+          <tr>
+            <td>
+              <h4>
+                Q.{{ skip_question.question_number }} 
+              </h4>
+            </td>
+            <td>
+              <h4>{{ skip_question.question_title }}</h4>
+            </td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan=2>
+              <h3 class='text-dark'>
+                Total Skips - {{ user_obj.total_skip_question }}
+              </h3>
+            </td>
+          </tr>
+        {% else %}
+          <br>
+          <h4 class='text-dark'>
+            Don't skip any question
+          </h4>
+          <small>What a moochodi</small>
+        {% endif %}
       {% else %}
         <br>
-        <h4 class='bg-dark text-white'>
-          {{user_obj.username|title}},don't skip any question
+        <h4 class='text-dark'>
+          {{ user_obj.username|title }},still don't complete the game.
         </h4>
+        <small>Wait for backchodi</small>
       {% endif %}
         <tr>
           <td colspan=2>
-            <a class='btn btn-primary text-white' href="{% url 'user_list' %}">
-              <h5>Back</h5>
+            <br>
+            <a class='btn btn-secondary text-white' href="{% url 'user_list' %}">
+              Back
             </a>
           </td>
         </tr>

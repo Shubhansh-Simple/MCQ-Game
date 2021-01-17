@@ -6,8 +6,9 @@
   User List
 {% endblock title %}
 
-
+<!--Extra code under head tag-->
 {% block remaining_content %}
+  {% load staticfiles %}
 {% endblock remaining_content %}
 
 {% block whiskey %}
@@ -28,25 +29,43 @@
 
 {% block body_block %}
 
-<br>
-<section class="jumbotron text-center bg-dark">
-  <div class="container table-responsive">
-    <h2 class='text-white'>Candidates</h2>
-    <table class="table text-white">
-        {% for user in user_list %}
-      <tr>
-        <td>
-          <a href="{% url 'user_detail' user.id %}">
-            <!-- <img class="img-fluid"  src=""> -->
-              <h4>{{ user.username|title }}</h4>
-          </a>
-        </td>
-      </tr>
-        {% endfor %}
-    </table>
+  <br>
+  <div class='text-center'>
+    <h2 class='text-danger'>All Candidates</h2>
   </div>
-</section>
-
+  <section class="jumbotron text-center bg-dark">
+    <div class="container table-responsive">
+      <table class="table text-white">
+        {% for user in user_list %}
+          <tr>
+            <td>
+              <a href="{% url 'user_detail' user.id %}">
+                {% if user.profile_pic %}
+                  <img class="img-fluid"  src="{{ user.profile_pic.url}}">
+                {% else %}
+                  <img class="img-fluid" 
+                   src="{% static 'default_user_pic.png' %}"
+                   alt='Male Pug'>
+                {% endif %}
+                  <br>
+                  <h4 class='text-white'>{{ user.username|title }}</h4>
+              </a>
+            </td>
+            <td> 
+              <p><b>Right Answers</b></p>
+              <h3 class='text-success'>{{ user.correct_answers }}</h3> 
+              <small class='text-muted'>( Click the image )</small>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </section>
+  <div class='text-center'>
+    <a class='btn btn-dark text-danger' href="{% url 'analyse_data' %}">
+      Analyse Full Result
+    </a>
+  </div>
 
 {% endblock body_block %}
 

@@ -14,7 +14,7 @@ class CustomUser( AbstractUser,CustomResizeImage ):
     profile_pic      = models.ImageField( upload_to='profile_pic/',
                                           null=True,
                                           blank=True,
-                                          help_text='Upload your profile picture' 
+                                          help_text='Upload your profile pic in (png/jpg format only)' 
                                         )
 
     correct_answers  = models.PositiveSmallIntegerField( default=0 )

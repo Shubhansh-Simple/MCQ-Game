@@ -74,21 +74,29 @@ class Question( models.Model,CustomResizeImage ):
                                              )
 
     question_image     = models.ImageField( upload_to='question_pic/',
-                                            help_text='Image shows with question.',
+                                            help_text='Image shows with question. format-png/jpg',
                                             null=True,
                                             blank=True 
                                           )
 
-    question_title     = models.CharField( max_length=200 ,help_text='Title of the question')
+    question_title     = models.CharField( max_length=200 ,
+                                           help_text='Title of the question' )
 
-    option_one_image   = models.ImageField( upload_to='option_pics/', help_text='Option one image' )
-    option_two_image   = models.ImageField( upload_to='option_pics/', help_text='Option two image' )
-    option_three_image = models.ImageField( upload_to='option_pics/', help_text='Option three image' )
-    option_four_image  = models.ImageField( upload_to='option_pics/', help_text='Option four image')
+    option_one_image   = models.ImageField( upload_to='option_pics/', 
+                                            help_text='Option one image format-png/jpg' )
+
+    option_two_image   = models.ImageField( upload_to='option_pics/',
+                                            help_text='Option two image format-png/jpg' )
+
+    option_three_image = models.ImageField( upload_to='option_pics/',
+                                            help_text='Option three image format-png/jpg' )
+
+    option_four_image  = models.ImageField( upload_to='option_pics/',
+                                            help_text='Option four image format-png/jpg' )
     
     answer             = models.CharField( max_length=1,
-                                            choices=ANSWER,
-                                            help_text='Enter right answer - A,B,C,D'
+                                           choices=ANSWER,
+                                           help_text='Enter right answer - A,B,C,D'
                                          )
 
     objects = QuestionManager()
