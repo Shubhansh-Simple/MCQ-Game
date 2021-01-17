@@ -12,8 +12,7 @@ class UserListView( ListView ):
     context_object_name = 'user_list'
 
     def get_queryset( self ):
-        return CustomUser.objects.filter( is_staff=False )\
-                                 .exclude( username='demo')
+        return CustomUser.objects.hide_special_user
 
 class UserDetailView( DetailView ):
     '''Users skipped question'''
@@ -29,7 +28,7 @@ def DataAnalysis( request ):
     correct_answers_list = []
     skiped_question_list = []
 
-    for x in CustomUser.objects.all():
+    for x in CustomUser.objects.hide_special_user:
         username_list.append( x.username )
         correct_answers_list.append( x.correct_answers )
         skiped_question_list.append( x.total_skip_question )

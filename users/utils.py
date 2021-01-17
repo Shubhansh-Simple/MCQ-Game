@@ -27,7 +27,7 @@ def get_plot( correct_answers,skip_questions,username ):
     #plt.figure(figsize=(20, 15))
     
     index = np.arange( len( correct_answers ) )
-    width = 0.50
+    width = 0.10
     
     plt.bar( index,
              correct_answers,width,
@@ -37,7 +37,7 @@ def get_plot( correct_answers,skip_questions,username ):
 
     plt.bar( index+width,
              skip_questions,
-             width-0.10,
+             width-0.02,
              color='red',
              align='edge',
              label='Skip Questions' )

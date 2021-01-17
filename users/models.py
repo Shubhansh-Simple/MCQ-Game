@@ -2,6 +2,13 @@ from django.contrib.auth.models import AbstractUser
 from django.db                  import models
 from question_app.models        import Question,CustomResizeImage
 
+class CustomUserModelManager( models.Manager ):
+
+    @property
+    def hide_special_user( self ):
+        '''Returns is_staff and starts with demo'''
+        return CustomUser.objects.filter( is_staff=False ).exclude( username='demo' )
+
 
 class CustomUser( AbstractUser,CustomResizeImage ):
     '''Add some extra fields to the user model.'''
@@ -22,13 +29,15 @@ class CustomUser( AbstractUser,CustomResizeImage ):
     winning_prize    = models.PositiveSmallIntegerField( default=0 )
     is_complete_quiz = models.BooleanField( default=False )
 
+    objects          = CustomUserModelManager()
+
     
     @property
     def total_skip_question( self ):
         '''Returns how many skip questions by the user'''
         return self.skip_question.all().count()
 
-    
+
     @property
     def increase_correct_answers( self ):
         '''Increase correct_answers by 1'''
