@@ -1,44 +1,37 @@
-<html >
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    {% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Graph</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <style>
+      #graph_image{
+         background:
+           url(data:image/png;base64,{{ chart|safe }})
+         no-repeat
+         center;
+         padding: 5px 0 5px 25px; 
+         width : 800px;
+         height : 500px;
+      }
 
-  <canvas id="myChart" width="1" height="1"></canvas>
-  <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ username_list|safe }},
-            datasets: [
-              {
-                label: '# Correct Answers',
-                data: {{ correct_answers_list|safe }},
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2
-              },
-              {
-                label: 'Skiped Questions',
-                data: {{ skiped_question_list|safe }},
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2
-              }
-          ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-  </script>
+    </style>
+</head>
+
+<body>
+
+  <div class='container-fluid text-center overflow-auto'>
+    {% if chart %}
+      <div class='container text-center' id='graph_image'>
+      </div>
+    {% else %}
+      <h2>No Data Found</h2>
+    {% endif %}
+  </div>
+
+    <a class='btn btn-primary text-white' href="{% url 'user_list' %}">
+      Back To Result Page
+    </a>
+</body>
+</html>
 
 
