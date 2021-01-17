@@ -1,10 +1,11 @@
-from django.shortcuts     import render
-from django.views.generic import ListView,DetailView
-from .models              import CustomUser
-from .utils               import get_plot
+from django.shortcuts              import render
+from django.contrib.auth.mixins    import LoginRequiredMixin
+from django.views.generic          import ListView,DetailView
+from .models                       import CustomUser
+from .utils                        import get_plot
 
 
-class UserListView( ListView ):
+class UserListView( LoginRequiredMixin,ListView ):
     '''All the user in database'''
 
     model               = CustomUser
@@ -14,7 +15,7 @@ class UserListView( ListView ):
     def get_queryset( self ):
         return CustomUser.objects.hide_special_user
 
-class UserDetailView( DetailView ):
+class UserDetailView( LoginRequiredMixin,DetailView ):
     '''Users skipped question'''
 
     model               = CustomUser
