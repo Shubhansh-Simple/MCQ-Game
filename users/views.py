@@ -13,7 +13,8 @@ class UserListView( LoginRequiredMixin,ListView ):
     context_object_name = 'user_list'
 
     def get_queryset( self ):
-        return CustomUser.objects.hide_special_user
+        return CustomUser.hide_special_user
+
 
 class UserDetailView( LoginRequiredMixin,DetailView ):
     '''Users skipped question'''
@@ -22,6 +23,7 @@ class UserDetailView( LoginRequiredMixin,DetailView ):
     template_name       = 'user_detail.html' 
     context_object_name = 'user_obj'
 
+
 def DataAnalysis( request ):
     '''Send required data to template to show the graph'''
 
@@ -29,7 +31,7 @@ def DataAnalysis( request ):
     correct_answers_list = []
     skiped_question_list = []
 
-    for x in CustomUser.objects.hide_special_user:
+    for x in CustomUser.hide_special_user:
         username_list.append( x.username )
         correct_answers_list.append( x.correct_answers )
         skiped_question_list.append( x.total_skip_question )
