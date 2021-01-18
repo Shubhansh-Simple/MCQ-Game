@@ -6,6 +6,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 class CustomResizeImage():
     '''Helper Class - To resize the image in memory with given ratio.'''
 
+
     def image_resize( self, image_read, dimensions, image_name ):
         '''Resizing image in memory using PIL then return the modified image'''
 
@@ -48,11 +49,10 @@ class QuestionManager( models.Manager ):
         return round( self.total_questions - self.total_questions/4 )
 
 
-
 class Numbering( models.Model ):
     '''For re-arranging the question order in future'''
 
-    question_number = models.PositiveIntegerField()
+    question_number = models.PositiveIntegerField( unique=True )
     
     def __str__( self ):
         return str( self.question_number )
