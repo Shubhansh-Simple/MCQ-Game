@@ -13,7 +13,7 @@ class UserListView( LoginRequiredMixin,ListView ):
     context_object_name = 'user_list'
 
     def get_queryset( self ):
-        return CustomUser.hide_special_user
+        return CustomUser.hide_special_user()
 
 
 class UserDetailView( LoginRequiredMixin,DetailView ):
@@ -31,7 +31,7 @@ def DataAnalysis( request ):
     correct_answers_list = []
     skiped_question_list = []
 
-    for x in CustomUser.hide_special_user:
+    for x in CustomUser.whose_quiz_complete():
         username_list.append( x.username )
         correct_answers_list.append( x.correct_answers )
         skiped_question_list.append( x.total_skip_question )

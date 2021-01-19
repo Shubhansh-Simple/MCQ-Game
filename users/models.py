@@ -25,10 +25,16 @@ class CustomUser( AbstractUser,CustomResizeImage ):
 
     @staticmethod
     def hide_special_user():
-        '''Returns is_staff and starts with demo'''
-        return CustomUser.objects.filter( is_staff=False ).exclude( username='demo' )
+        '''Returns is_staff and endswith _demo'''
+        return CustomUser.objects.filter( is_staff=False ).exclude( username__endswith='_demo' )
 
-    
+    @staticmethod
+    def whose_quiz_complete():
+        '''All non-special user whose quiz complete for plotting'''
+
+        return __class__.hide_special_user().filter( is_complete_quiz=True )
+
+ 
     @property
     def total_skip_question( self ):
         '''Returns how many skip questions by the user'''
@@ -55,7 +61,7 @@ class CustomUser( AbstractUser,CustomResizeImage ):
             return True
         return False
 
-
+   
     def save( self,*args,**kwargs ):
         '''Resize profile_pic before saving.'''
 
