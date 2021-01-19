@@ -49,12 +49,25 @@
                 {% endif %}
                   <br>
                   <h4 class='text-white'>{{ user.username|title }}</h4>
+                  <small class='text-muted'>( Click the image )</small>
               </a>
             </td>
             <td> 
-              <p><b>Right Answers</b></p>
+              <b>Right Answers</b>
               <h3 class='text-success'>{{ user.correct_answers }}</h3> 
-              <small class='text-muted'>( Click the image )</small>
+                <small class='text-white'>
+                  {% if user.is_complete_quiz %}
+                      Whiskey ko 
+                        {% if user.is_pregnant %}
+                          <b class='text-success'>garbhwati</b> 
+                        {% else %}
+                          <b class='text-danger'>banj</b>
+                        {% endif %}
+                      banaya
+                  {% else %}
+                    ..........
+                  {% endif %}
+                </small>
             </td>
           </tr>
         {% endfor %}
