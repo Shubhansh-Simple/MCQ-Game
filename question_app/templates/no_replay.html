@@ -1,0 +1,44 @@
+<!--quesition_app/templates/no_replay.html-->
+
+{% extends 'base_template.html' %}
+
+{% block title %}
+  Failed To Play
+{% endblock title %}
+
+<!--Extra code under head tag-->
+{% block remaining_content %}
+  {% load staticfiles %}
+{% endblock remaining_content %}
+
+{% block whiskey %}
+{% endblock whiskey %}
+
+{% block profile %}
+
+  {% block results %}
+  {% endblock results %}
+  
+  {% block question_title %}
+  {% endblock question_title %}
+  
+  {% block additional_text %}
+  {% endblock additional_text %}
+
+{% endblock profile %}
+
+
+{% block body_block %}
+  <div class='text-center'>
+    <br>
+    <h1 class='text-white bg-danger'>You can't play the game twice !</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <a class='btn btn-primary text-white' href="{% url 'result' %}">Back To Result Page</a>
+  </div>
+{% endblock body_block %}
+
+

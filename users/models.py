@@ -31,7 +31,8 @@ class CustomUser( AbstractUser,CustomResizeImage ):
     @staticmethod
     def whose_quiz_complete():
         '''All non-special user whose quiz complete for plotting'''
-
+        
+        # how to use staticmethod into another within class
         return __class__.hide_special_user().filter( is_complete_quiz=True )
 
  

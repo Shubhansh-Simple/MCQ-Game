@@ -46,7 +46,7 @@ def QuestionPage( request, question_id=None ):
             return render( request , 'question.html' ,context=context)
 
         raise Http404('Question Not Found')
-    raise Http404('You can\'t play the game twice.')
+    return redirect( 'no_replay' )
 
 
 @login_required()
