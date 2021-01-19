@@ -73,7 +73,7 @@ def FormProcessing( request, question_id=None ):
                 request.user.increase_winning_prize
                 request.user.increase_correct_answers
                 messages.success( request,
-                                  'Sahi Jawab!'
+                                  'Sahi Jawab!, 10rs paytm cash'
                                 )
 
         #When the question is skipped
