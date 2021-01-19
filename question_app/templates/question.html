@@ -5,6 +5,11 @@
   Sawal {{ question.question_number }}
 {% endblock title %}
  
+{% block remaining_content %}
+  {% include 'disabled_back_button.html' %}
+{% endblock remaining_content %}
+
+
 <!--Semen image movement section.-->
 {% block whiskey %}
   <div class='table-responsive' >
