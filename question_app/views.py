@@ -4,7 +4,7 @@ from django.contrib.auth.mixins     import LoginRequiredMixin
 from django.contrib                 import messages
 from django.http                    import Http404
 from django.shortcuts               import get_object_or_404,render,redirect
-from .models                        import Question,Numbering
+from .models                        import Question,Numbering,Attempt
 
 
 class TermsConditionView( LoginRequiredMixin,TemplateView ):
@@ -51,44 +51,63 @@ def QuestionPage( request, question_id=None ):
 
 @login_required()
 def FormProcessing( request, question_id=None ):
-    '''Take form inputs,compare with answer then redirect with message.'''
+    '''Take form inputs,then redirect with message after comparision.'''
 
     if request.method == 'POST':
-        answer     = request.POST.get('image_selected') 
 
         obj_numbering = get_object_or_404( Numbering, question_number=question_id )
         question_obj  = get_object_or_404( Question, question_number=obj_numbering )
 
-        '''Comparision with answer'''
-        if answer in ['A','B','C','D']:
+        if not Attempt.objects.filter( contestent=request.user,
+                                       contestent_question=question_obj 
+                                     ).exists():
 
-            #When the answer is wrong
-            if not question_obj.answer == answer:
-                messages.error( request,
-                                'Gand Maraliye, Ans was %s' %(question_obj.answer) 
-                              )
-            
-            #When the answer is correct
+            answer      = request.POST.get('image_selected') 
+            attempt_obj = Attempt( contestent=request.user, contestent_question=question_obj )
+
+
+            '''Comparision with answer'''
+            if answer in ['A','B','C','D']:
+
+                #When the answer is wrong
+                if not question_obj.answer == answer:
+                    messages.error( request,
+                                    'Gand Maraliye, Ans was %s' %(question_obj.answer) 
+                                  )
+                    attempt_obj.contestent_answer='W'
+                
+                #When the answer is correct
+                else:
+                    request.user.increase_winning_prize
+                    request.user.increase_correct_answers
+                    messages.success( request,
+                                      'Sahi Jawab!, 10rs paytm cash'
+                                    )
+                    attempt_obj.contestent_answer='R'
+
+            #When the question is skipped
             else:
-                request.user.increase_winning_prize
-                request.user.increase_correct_answers
-                messages.success( request,
-                                  'Sahi Jawab!, 10rs paytm cash'
-                                )
+                messages.warning( request,'Aapki gand phat gyi lgta')
+                
+                # skip question many2many
+                request.user.skip_question.add( question_obj ) 
+                attempt_obj.contestent_answer='S'
 
-        #When the question is skipped
-        else:
-            messages.warning( request,'Aapki gand phat gyi lgta')
+            # save
+            request.user.save()
+            attempt_obj.save()
             
-            # skip question many2many
-            request.user.skip_question.add( question_obj ) 
+            # Next question
+            return redirect( 'question', question_id=question_id-1 )
 
-        request.user.save()
-        
-        # Next question
-        return redirect( 'question', question_id=question_id-1 )
+        # add msg already answered
+        else:
+            messages.warning( request,
+                              'Already answered this question'  
+                            )
 
-    raise Http404('Invalid Data.')
+    # redirect to same page
+    return redirect( 'question', question_id=question_id )
 
 
 class ResultView( LoginRequiredMixin,TemplateView ):
