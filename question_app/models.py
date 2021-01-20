@@ -1,4 +1,5 @@
 from django.db                      import models
+from django.conf                    import settings
 from PIL                            import Image as Img
 from io                             import BytesIO 
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -148,5 +149,29 @@ class Question( models.Model,CustomResizeImage ):
 
     def __str__( self ):
         return str( self.question_number ) + '.) ' + str( self.question_title )
+
+
+class Attempt( models.Model ):
+    '''Bind User's answer with attempt question 'S'kip 'R'ight 'W'rong'''
+
+    CHOICES= ( 
+            ('S','S'),
+            ('W','W'),
+            ('R','R'),
+        )
+
+    contestent          = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete=models.CASCADE )
+    contestent_question = models.ForeignKey( Question,                 on_delete=models.CASCADE )
+    contestent_answer   = models.CharField( max_length=1,
+                                            choices=CHOICES,
+                                            help_text='Enter right answer - Skip,Right,Wrong'
+                                        )
+
+    class Meta:
+        # user can't answer the same question
+        unique_together = ( 'contestent' , 'contestent_question' , )
+
+    def __str__( self ):
+        return str( self.contestent ) + ' - ' + 'Q. ' + str( self.contestent_question )[:1] + ')'
 
 
