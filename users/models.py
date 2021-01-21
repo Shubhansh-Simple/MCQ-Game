@@ -18,7 +18,6 @@ class CustomUser( AbstractUser,CustomResizeImage ):
                                         )
 
     correct_answers  = models.PositiveSmallIntegerField( default=0 )
-    skip_question    = models.ManyToManyField( Question, blank=True )
     winning_prize    = models.PositiveSmallIntegerField( default=0 )
     is_complete_quiz = models.BooleanField( default=False )
 
@@ -35,12 +34,11 @@ class CustomUser( AbstractUser,CustomResizeImage ):
         # how to use staticmethod into another within class
         return __class__.hide_special_user().filter( is_complete_quiz=True )
 
- 
+    ''' 
     @property
     def total_skip_question( self ):
-        '''Returns how many skip questions by the user'''
         return self.skip_question.all().count()
-
+    ''' 
 
     @property
     def increase_correct_answers( self ):

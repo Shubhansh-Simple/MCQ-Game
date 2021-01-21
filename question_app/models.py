@@ -171,6 +171,12 @@ class Attempt( models.Model ):
         # user can't answer the same question
         unique_together = ( 'contestent' , 'contestent_question' , )
 
+
+    @property
+    def total_skip_question( self ):
+        pass
+
+
     def __str__( self ):
         return str( self.contestent ) + ' - ' + 'Q. ' + str( self.contestent_question )[:1] + ')'
 

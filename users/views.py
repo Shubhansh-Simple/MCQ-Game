@@ -1,6 +1,6 @@
 from django.shortcuts              import render
 from django.contrib.auth.mixins    import LoginRequiredMixin
-from django.views.generic          import ListView,DetailView
+from django.views.generic          import ListView
 from .models                       import CustomUser
 from .utils                        import get_plot
 
@@ -16,14 +16,6 @@ class UserListView( LoginRequiredMixin,ListView ):
         return CustomUser.hide_special_user()
 
 
-class UserDetailView( LoginRequiredMixin,DetailView ):
-    '''Users skipped question'''
-
-    model               = CustomUser
-    template_name       = 'user_detail.html' 
-    context_object_name = 'user_obj'
-
-
 def DataAnalysis( request ):
     '''Send required data to template to show the graph'''
 
@@ -34,7 +26,7 @@ def DataAnalysis( request ):
     for x in CustomUser.whose_quiz_complete():
         username_list.append( x.username )
         correct_answers_list.append( x.correct_answers )
-        skiped_question_list.append( x.total_skip_question )
+        #skiped_question_list.append( x.total_skip_question )
         
     chart = get_plot( correct_answers_list,skiped_question_list,username_list )
 

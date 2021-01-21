@@ -10,14 +10,13 @@ class CustomUserAdmin( UserAdmin ):
     add_form      = CustomUserCreationForm
     form          = CustomUserChangeForm
     model         = CustomUser
-    list_display  = ['username','is_complete_quiz','is_pregnant','total_skip_question']
+    list_display  = ['username','is_complete_quiz','is_pregnant']
     
     # For seeing extra fields.
     UserAdmin.fieldsets += ( 'Additional Info',
                              {'fields' :  ( 'profile_pic',
                                             'correct_answers',
                                             'winning_prize',
-                                            'skip_question',
                                             'is_complete_quiz' 
                                           ), 
                              }

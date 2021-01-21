@@ -78,19 +78,16 @@ def FormProcessing( request, question_id=None ):
                 
                 #When the answer is correct
                 else:
+                    # increment.
                     request.user.increase_winning_prize
                     request.user.increase_correct_answers
-                    messages.success( request,
-                                      'Sahi Jawab!, 10rs paytm cash'
-                                    )
+
+                    messages.success( request, 'Sahi Jawab!, 10rs paytm cash')
                     attempt_obj.contestent_answer='R'
 
             #When the question is skipped
             else:
-                messages.warning( request,'Aapki gand phat gyi lgta')
-                
-                # skip question many2many
-                request.user.skip_question.add( question_obj ) 
+                messages.warning( request,'Aapki gand phat gyi lgta' )
                 attempt_obj.contestent_answer='S'
 
             # save

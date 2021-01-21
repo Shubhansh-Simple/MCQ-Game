@@ -39,18 +39,15 @@
         {% for user in user_list %}
           <tr>
             <td>
-              <a href="{% url 'user_detail' user.id %}">
-                {% if user.profile_pic %}
-                  <img class="img-fluid"  src="{{ user.profile_pic.url}}">
-                {% else %}
-                  <img class="img-fluid" 
-                   src="{% static 'default_user_pic.png' %}"
-                   alt='Male Pug'>
-                {% endif %}
-                  <br>
-                  <h4 class='text-white'>{{ user.username|title }}</h4>
-                  <small class='text-muted'>( Click the image )</small>
-              </a>
+              {% if user.profile_pic %}
+                <img class="img-fluid"  src="{{ user.profile_pic.url}}">
+              {% else %}
+                <img class="img-fluid" 
+                 src="{% static 'default_user_pic.png' %}"
+                 alt='Male Pug'>
+              {% endif %}
+                <br>
+                <h4 class='text-white'>{{ user.username|title }}</h4>
             </td>
             <td> 
               <b>Right Answers</b>
