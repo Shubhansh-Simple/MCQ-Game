@@ -177,7 +177,7 @@ class Attempt( models.Model ):
     class Meta:
         # user can't answer the same question
         unique_together = ( 'contestent' , 'contestent_question' , )
-        ordering        = ['contestent']
+        ordering        = ['contestent','contestent_question', ]
 
 
     @property

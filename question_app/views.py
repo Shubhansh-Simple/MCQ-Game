@@ -8,11 +8,25 @@ from .models                        import Question,Numbering,Attempt
 
 #DRY PRINCIPLES
 def finish_the_game( request ):
-    '''Make is_complete_quiz True,and redirect to Result page.'''
+    '''Make is_complete_quiz True,and redirect to Result page'''
 
     request.user.is_complete_quiz = True 
     request.user.save()
     return redirect( 'result' ) 
+
+
+#DRY PRINCIPLES
+def non_attempt_questions( request ):
+    '''Returns all the question object not attempt by the logged-in user'''
+
+    # SET Theory Mathematics.
+    answered_question = set( x.contestent_question \
+                             for x in Attempt.objects.filter( contestent=request.user ) 
+                           )
+
+    total_questions =  set( x for x in Question.objects.all() )
+
+    return answered_question ^ total_questions
 
 
 #DRY PRINCIPLES
@@ -38,6 +52,7 @@ class TermsConditionView( LoginRequiredMixin,TemplateView ):
 def QuestionPage( request, question_id=None ):
     '''Show Detail Page with messages.'''
 
+
     if not request.user.is_complete_quiz:
         if type(question_id):
             try:
@@ -47,11 +62,15 @@ def QuestionPage( request, question_id=None ):
                 '''Extra work for result page.'''
 
                 if question_id == 0:
-                    if is_attempt_all_question():
-                        return finish_the_game()
+                    if is_attempt_all_question( request ):
+                        return finish_the_game( request )
                     else:
                         # redirect to somewhere
-                        pass
+                        return redirect( 'question',\
+                                          question_id= list( \
+                                                             non_attempt_questions( request )\
+                                                           )[0].question_number.question_number
+                                       )
 
                 raise Http404('Question Not Found')
 
@@ -60,8 +79,8 @@ def QuestionPage( request, question_id=None ):
                               'question'          : question_obj,
                               'passing_pushes'    : Question.objects.passing_pushes,
                               'answered_question' : Attempt.objects.filter( \
-                                                        contestent=request.user,
-                                                        contestent_question=question_obj
+                                                        contestent=request.user,\
+                                                        contestent_question=question_obj\
                                                         ).exists()
                             }
             return render( request , 'question.html' ,context=context)
@@ -132,19 +151,12 @@ def FormProcessing( request, question_id=None ):
 @login_required()
 def Quit( request ):
     '''After quitting all his non-attempt question will marked as skipped'''
-
-    # SET Theory Mathematics.
-    answered_question = set( x.contestent_question \
-                             for x in Attempt.objects.filter( contestent=request.user ) 
-                           )
-
-    total_questions =  set( x for x in Question.objects.all() )
-    
+   
     # Non common values i.e. left questions
-    for x in answered_question ^ total_questions :
+    for x in non_attempt_questions( request ) :
         Attempt( contestent=request.user , contestent_question=x , contestent_answer='S').save()
     
-    return finish_the_game()
+    return finish_the_game( request )
 
 
 class ResultView( LoginRequiredMixin,TemplateView ):
