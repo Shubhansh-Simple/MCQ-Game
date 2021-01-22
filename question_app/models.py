@@ -41,6 +41,8 @@ class QuestionManager( models.Manager ):
     
     @property
     def total_questions( self ):
+        '''Counts the total questions'''
+
         return Question.objects.all().count()
 
     @property

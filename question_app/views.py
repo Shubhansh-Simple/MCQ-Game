@@ -6,6 +6,22 @@ from django.http                    import Http404
 from django.shortcuts               import get_object_or_404,render,redirect
 from .models                        import Question,Numbering,Attempt
 
+#DRY PRINCIPLES
+def finish_the_game( request ):
+    '''Make is_complete_quiz True,and redirect to Result page.'''
+
+    request.user.is_complete_quiz = True 
+    request.user.save()
+    return redirect( 'result' ) 
+
+
+#DRY PRINCIPLES
+def is_attempt_all_question( request ):
+    '''User attempt all question or not (T/F)'''
+
+    return Question.objects.total_questions == \
+            Attempt.objects.filter( contestent=request.user ).count()
+
 
 class TermsConditionView( LoginRequiredMixin,TemplateView ):
     '''Terms and conditions page.'''
@@ -31,11 +47,11 @@ def QuestionPage( request, question_id=None ):
                 '''Extra work for result page.'''
 
                 if question_id == 0:
-                    '''is_complete_quiz have to true'''
-
-                    request.user.is_complete_quiz = True 
-                    request.user.save()
-                    return redirect( 'result' ) 
+                    if is_attempt_all_question():
+                        return finish_the_game()
+                    else:
+                        # redirect to somewhere
+                        pass
 
                 raise Http404('Question Not Found')
 
@@ -102,9 +118,11 @@ def FormProcessing( request, question_id=None ):
             messages.warning( request,
                               'Already answered this question'  
                             )
+            # here we have to redirect the user to non-attempt question
 
     # redirect to same page
     return redirect( 'question', question_id=question_id )
+
 
 @login_required()
 def Quit( request ):
@@ -121,9 +139,7 @@ def Quit( request ):
     for x in answered_question ^ total_questions :
         Attempt( contestent=request.user , contestent_question=x , contestent_answer='S').save()
     
-    request.user.is_complete_quiz = True 
-    request.user.save()
-    return redirect( 'result' ) 
+    return finish_the_game()
 
 
 class ResultView( LoginRequiredMixin,TemplateView ):
