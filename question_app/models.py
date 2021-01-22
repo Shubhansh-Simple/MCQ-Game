@@ -56,6 +56,9 @@ class Numbering( models.Model ):
     '''For re-arranging the question order in future'''
 
     question_number = models.PositiveIntegerField( unique=True )
+
+    class Meta:
+        ordering = ['question_number']
     
     def __str__( self ):
         return str( self.question_number )
@@ -104,6 +107,8 @@ class Question( models.Model,CustomResizeImage ):
 
     objects = QuestionManager()
 
+    class Meta:
+        ordering = ['question_number']
 
     @property
     def total_questions_list( self ):
@@ -172,6 +177,7 @@ class Attempt( models.Model ):
     class Meta:
         # user can't answer the same question
         unique_together = ( 'contestent' , 'contestent_question' , )
+        ordering        = ['contestent']
 
 
     @property

@@ -175,25 +175,33 @@
         <!--Form Submit Button-->
         <tr>
 
-          <!--If already answered-->
+          <!--Already Answered-->
+          {% if answered_question %}
           <td colspan=2>
-            <a class='btn btn-primary text-white' style='width:200px'>
-              Next Question
+            <!--NEXT-->
+            <a class='btn btn-primary text-white' 
+               style='width:250px'
+               href="{% url 'question' question.question_number.question_number|add:"-1" %}">
+                Next Question >>>
             </a>
           </td>
+
           <!--Fresh Question-->
+          {% else %}
           <td>
-            <!--href to the next page or nothing else-->
+            <!--SKIP-->
             <input class='btn btn-warning' name='image_selected' type='submit' value='Skip Kiya Jaye'>
           </td>
           <td>
+            <!--LOCK-->
             <input class='btn btn-success text-dark' type='submit' value='Lock Kiya Jaye'>
           </td>
+          {% endif %}
         </tr>
 
         <tr>
           <td colspan=2>
-            <input class='btn btn-sm btn-outline-danger font-weight-bold'
+            <input class='btn btn-sm btn-danger font-weight-bold'
               type='button' value='Quit Kiya Jaye ?' data-toggle="modal" data-target="#myModal" >
           </td>
         </tr>

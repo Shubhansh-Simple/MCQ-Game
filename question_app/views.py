@@ -56,8 +56,13 @@ def QuestionPage( request, question_id=None ):
                 raise Http404('Question Not Found')
 
             question_obj  = get_object_or_404( Question,  question_number=obj_numbering )
-            context       = { 'question' : question_obj,
-                              'passing_pushes' : Question.objects.passing_pushes 
+            context       = {
+                              'question'          : question_obj,
+                              'passing_pushes'    : Question.objects.passing_pushes,
+                              'answered_question' : Attempt.objects.filter( \
+                                                        contestent=request.user,
+                                                        contestent_question=question_obj
+                                                        ).exists()
                             }
             return render( request , 'question.html' ,context=context)
 

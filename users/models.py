@@ -3,6 +3,7 @@ from django.db                  import models
 from question_app.models        import Question,CustomResizeImage
 
 
+
 class CustomUser( AbstractUser,CustomResizeImage ):
     '''Add some extra fields to the user model.'''
 
@@ -34,11 +35,6 @@ class CustomUser( AbstractUser,CustomResizeImage ):
         # how to use staticmethod into another within class
         return __class__.hide_special_user().filter( is_complete_quiz=True )
 
-    ''' 
-    @property
-    def total_skip_question( self ):
-        return self.skip_question.all().count()
-    ''' 
 
     @property
     def increase_correct_answers( self ):
