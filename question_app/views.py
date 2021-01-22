@@ -106,6 +106,25 @@ def FormProcessing( request, question_id=None ):
     # redirect to same page
     return redirect( 'question', question_id=question_id )
 
+@login_required()
+def Quit( request ):
+    '''After quitting all his non-attempt question will marked as skipped'''
+
+    # SET Theory Mathematics.
+    answered_question = set( x.contestent_question \
+                             for x in Attempt.objects.filter( contestent=request.user ) 
+                           )
+
+    total_questions =  set( x for x in Question.objects.all() )
+    
+    # Non common values i.e. left questions
+    for x in answered_question ^ total_questions :
+        Attempt( contestent=request.user , contestent_question=x , contestent_answer='S').save()
+    
+    request.user.is_complete_quiz = True 
+    request.user.save()
+    return redirect( 'result' ) 
+
 
 class ResultView( LoginRequiredMixin,TemplateView ):
     '''Showing the logged-in user's result page.'''

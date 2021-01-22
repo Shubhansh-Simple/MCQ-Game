@@ -102,6 +102,41 @@
 
 {% block body_block %}
 
+
+
+<div class="container">
+  <!-- Trigger the modal with a button -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content bg-white">
+        <div class="modal-body bg-white text-center">
+          <h1> Are you sure ? </h1>
+          <small>गांडू डोबरा नहीं खेलने दूंगा</small>
+          <br>
+          <a class="btn btn-default btn-dark text-danger" href="{% url 'quit' %}">
+            Exit Now
+          </a>
+          <a class="btn btn-default btn-danger " href="" data-dismiss="modal">
+            &nbsp; <b>&times;</b> &nbsp;
+          </a>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+
+
 <section class="jumbotron text-center bg-dark">
   <div class="container table-responsive">
     <form action="{% url 'form_processing' question.question_number %}" method="POST">
@@ -141,10 +176,16 @@
         <tr>
           <td>
             <!--href to the next page or nothing else-->
-            <input class='btn btn-danger' name='image_selected' type='submit' value='Skip Kiya Jaye'>
+            <input class='btn btn-warning' name='image_selected' type='submit' value='Skip Kiya Jaye'>
           </td>
           <td>
-            <input class='btn btn-success' type='submit' value='Lock Kiya Jaye'>
+            <input class='btn btn-success text-dark' type='submit' value='Lock Kiya Jaye'>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <input class='btn btn-sm btn-outline-danger font-weight-bold'
+              type='button' value='Quit Kiya Jaye ?' data-toggle="modal" data-target="#myModal" >
           </td>
         </tr>
       </table>
