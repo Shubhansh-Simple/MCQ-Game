@@ -21,7 +21,7 @@ def non_attempt_questions( request ):
 
     # SET Theory Mathematics.
     answered_question = set( x.contestent_question \
-                             for x in Attempt.objects.filter( contestent=request.user ) 
+                             for x in Attempt.objects.attempt_questions( request.user ) 
                            )
 
     total_questions =  set( x for x in Question.objects.all() )
@@ -31,10 +31,10 @@ def non_attempt_questions( request ):
 
 #DRY PRINCIPLES
 def is_attempt_all_question( request ):
-    '''User attempt all question or not (T/F)'''
+    '''User attempt all questions or not (T/F)'''
 
     return Question.objects.total_questions == \
-            Attempt.objects.filter( contestent=request.user ).count()
+            Attempt.objects.attempt_questions( request.user ).count()
 
 
 class TermsConditionView( LoginRequiredMixin,TemplateView ):
@@ -78,10 +78,10 @@ def QuestionPage( request, question_id=None ):
             context       = {
                               'question'          : question_obj,
                               'passing_pushes'    : Question.objects.passing_pushes,
-                              'answered_question' : Attempt.objects.filter( \
-                                                        contestent=request.user,\
-                                                        contestent_question=question_obj\
-                                                        ).exists()
+                              'answered_question' : Attempt.objects.is_attempt_question(\
+                                                                                        request.user,\
+                                                                                        question_obj \
+                                                                                       )\
                             }
             return render( request , 'question.html' ,context=context)
 
@@ -98,10 +98,7 @@ def FormProcessing( request, question_id=None ):
         obj_numbering = get_object_or_404( Numbering, question_number=question_id )
         question_obj  = get_object_or_404( Question, question_number=obj_numbering )
 
-        if not Attempt.objects.filter( contestent=request.user,
-                                       contestent_question=question_obj 
-                                     ).exists():
-
+        if not Attempt.objects.is_attempt_question( request.user , question_obj ):
             answer      = request.POST.get('image_selected') 
             attempt_obj = Attempt( contestent=request.user, contestent_question=question_obj )
 
@@ -165,7 +162,8 @@ class ResultView( LoginRequiredMixin,TemplateView ):
     template_name = 'user_result.html'
 
     def get_context_data( self,**kwargs ):
-        context                     = super().get_context_data( **kwargs )
-        context['total_questions']  = Question.objects.total_questions
+        context                            = super().get_context_data( **kwargs )
+        context['total_questions']         = Question.objects.total_questions
+        context['total_skipped_questions'] = Attempt.objects.total_skipped_questions( self.request.user )
         return context
  

@@ -26,6 +26,7 @@ class CustomUser( AbstractUser,CustomResizeImage ):
     @staticmethod
     def hide_special_user():
         '''Returns is_staff and endswith _demo'''
+
         return CustomUser.objects.filter( is_staff=False ).exclude( username__endswith='_demo' )
 
     @staticmethod

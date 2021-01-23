@@ -158,6 +158,28 @@ class Question( models.Model,CustomResizeImage ):
         return str( self.question_number ) + '.) ' + str( self.question_title )
 
 
+class AttemptManager( models.Manager ):
+    
+    def attempt_questions( self,logged_in_user ):
+        '''Returns all the attempt questions by the user'''
+
+        return Attempt.objects.filter( contestent=logged_in_user )
+
+    def is_attempt_question( self, logged_in_user, question_object ):
+        '''Check whether question attempt by user or not (T/F)'''
+
+        return Attempt.objects.filter( 
+                                      contestent         =logged_in_user,\
+                                      contestent_question=question_object\
+                                     ).exists()
+
+    def total_skipped_questions( self, logged_in_user ):
+        '''Returns the no.of question skipped by the user'''
+
+        return Attempt.objects.filter( contestent=logged_in_user,contestent_answer='S' ).count()
+
+
+
 class Attempt( models.Model ):
     '''Bind User's answer with attempt question 'S'kip 'R'ight 'W'rong'''
 
@@ -173,16 +195,13 @@ class Attempt( models.Model ):
                                             choices=CHOICES,
                                             help_text='Enter right answer - Skip,Right,Wrong'
                                         )
+    objects = AttemptManager()
 
     class Meta:
         # user can't answer the same question
-        unique_together = ( 'contestent' , 'contestent_question' , )
+        unique_together = ( 'contestent', 'contestent_question', )
         ordering        = ['contestent','contestent_question', ]
 
-
-    @property
-    def total_skip_question( self ):
-        pass
 
 
     def __str__( self ):
