@@ -78,6 +78,7 @@
   {% endif %}
 {% endblock results %}
 
+<!--Question Display Section-->
 {% block question_title %}
 
   <div class='text-center'>
@@ -124,19 +125,13 @@
             &nbsp; <b>&times;</b> &nbsp;
           </a>
         </div>
-        <div class="modal-footer">
-
-        </div>
       </div>
-      
     </div>
   </div>
-  
 </div>
 
 
-
-
+<!--Option Display Section-->
 <section class="jumbotron text-center bg-dark">
   <div class="container table-responsive">
     <form action="{% url 'form_processing' question.question_number %}" method="POST">

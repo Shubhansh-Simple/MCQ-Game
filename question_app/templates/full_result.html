@@ -1,0 +1,76 @@
+<!--quesition_app/templates/full_result.html-->
+
+{% extends 'base_template.html' %}
+
+{% block title %}
+  Complete Result
+{% endblock title %}
+
+<!--Extra code under head tag-->
+{% block remaining_content %}
+  {% load staticfiles %}
+{% endblock remaining_content %}
+
+{% block whiskey %}
+{% endblock whiskey %}
+
+{% block profile %}
+
+  {% block results %}
+  {% endblock results %}
+  
+  {% block question_title %}
+    <div class='text-center'>
+      <h1 class='text-primary'>Full Results</h1>
+    </div>
+  {% endblock question_title %}
+  
+  {% block additional_text %}
+  {% endblock additional_text %}
+
+{% endblock profile %}
+
+
+{% block body_block %}
+  <div class='table-responsive' >
+    <table class='table whiskey-table text-white'> 
+
+      <!--HEADING of the table-->
+      <thead class='bg-dark'>
+        <th class='text-center'>Questions</th>
+        <th class='text-success'>
+          <img src="{% static 'admin/img/icon-yes.svg' %}"
+               alt='Right'
+               style='width:20px;height:20px'>
+        </th>
+        <th class='text-danger'>
+          <img src="{% static 'admin/img/icon-no.svg' %}"
+               alt='Wrong'
+               style='width:20px;height:20px'>
+        </th>
+        <th class='text-warning'>
+          <img src="{% static 'admin/img/icon-alert.svg' %}"
+               alt='Skip'
+               style='width:20px;height:20px'>
+        </th>
+      </thead>
+  
+      {% for question in question_obj %}
+        <tr>
+          <td>
+            {% if question.question_image %}
+              <img class='rounded-circle' src='{{ question.question_image.url }}' 
+                   alt='Question Picture' width=160 , height=160>
+            {% endif %}
+            <p>Q.{{ question.question_title }}</p>
+          </td>
+          <td>.</td>
+          <td>.</td>
+          <td>.</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock body_block %}
+
+

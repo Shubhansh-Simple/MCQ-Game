@@ -30,7 +30,6 @@ def DataAnalysis( request ):
         
     chart = get_plot( correct_answers_list,skiped_question_list,username_list )
 
-
     return render( request , 'data_analysis.html', { 'chart':chart } )
         
 

@@ -1,4 +1,4 @@
-from django.views.generic           import TemplateView 
+from django.views.generic           import TemplateView,ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins     import LoginRequiredMixin
 from django.contrib                 import messages
@@ -134,12 +134,11 @@ def FormProcessing( request, question_id=None ):
             # Next question
             return redirect( 'question', question_id=question_id-1 )
 
-        # add msg already answered
+        # add msg if already answered
         else:
             messages.warning( request,
                               'Already answered this question'  
                             )
-            # here we have to redirect the user to non-attempt question
 
     # redirect to same page
     return redirect( 'question', question_id=question_id )
@@ -166,4 +165,12 @@ class ResultView( LoginRequiredMixin,TemplateView ):
         context['total_questions']         = Question.objects.total_questions
         context['total_skipped_questions'] = Attempt.objects.total_skipped_questions( self.request.user )
         return context
+
+
+class FullResultView( ListView ):
+    model               = Question
+    template_name       = 'full_result.html'
+    context_object_name = 'question_obj'
+
+
  

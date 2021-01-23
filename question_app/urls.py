@@ -3,7 +3,8 @@ from .views      import QuestionPage,\
                         FormProcessing,\
                         TermsConditionView,\
                         Quit,\
-                        ResultView
+                        ResultView,\
+                        FullResultView
 
 # it's imported from different source
 from django.views.generic.base import TemplateView
@@ -21,5 +22,6 @@ urlpatterns = [
 
     path('quit/' , Quit , name='quit'),
 
-    path('results/', ResultView.as_view(),  name='result' ),
+    path('results/',      ResultView.as_view(),     name='result' ),
+    path('full_results/', FullResultView.as_view(), name='full_result' ),
 ]
