@@ -9,6 +9,14 @@
 <!--Extra code under head tag-->
 {% block remaining_content %}
   {% load staticfiles %}
+
+<style>
+	tr.border_bottom 
+	td { 
+		border-bottom: 1px solid white; 
+	}
+</style>
+
 {% endblock remaining_content %}
 
 {% block whiskey %}
@@ -33,17 +41,17 @@
 
 {% block body_block %}
   <div class='table-responsive' >
-    <table class='table whiskey-table text-white'> 
+    <table class='table table-dark text-white'> 
 
       <!--HEADING of the table-->
-      <thead class='bg-dark'>
-        <th class='text-center'>Questions</th>
+      <thead class='whiskey-table'>
+        <th class='text-center text-white'>Questions</th>
         <th class='text-success'>
           <img src="{% static 'admin/img/icon-yes.svg' %}"
                alt='Right'
                style='width:20px;height:20px'>
         </th>
-        <th class='text-danger'>
+        <th class='text-danger text-center'>
           <img src="{% static 'admin/img/icon-no.svg' %}"
                alt='Wrong'
                style='width:20px;height:20px'>
@@ -55,18 +63,51 @@
         </th>
       </thead>
   
-      {% for question in question_obj %}
-        <tr>
+      {% for question in questions %}
+        <tr class='border_bottom' style=''>
           <td>
-            {% if question.question_image %}
-              <img class='rounded-circle' src='{{ question.question_image.url }}' 
-                   alt='Question Picture' width=160 , height=160>
+            {% if question.question_obj.question_image %}
+              <img class='rounded-circle' src='{{ question.question_obj.question_image.url }}' 
+                   alt='Question Picture' style="width:50px;height:50px">
             {% endif %}
-            <p>Q.{{ question.question_title }}</p>
+            <p>Q.{{ question.question_obj.question_title }}</p>
           </td>
-          <td>.</td>
-          <td>.</td>
-          <td>.</td>
+          <td>
+            {% if question.R %}
+              {% for each_question in question.R %}
+                <img class='rounded-circle'
+                     src="{{ each_question.contestent.profile_pic.url }}"
+                     alt="{{ each_question.contestent }}"
+                     style="width:30px;height:30px" >
+              {% endfor %}
+            {% else %}
+              <b>.....</b>
+            {% endif %}
+          </td>
+          <td>
+            {% if question.W %}
+              {% for each_question in question.W %}
+                <img class='rounded-circle'
+                     src="{{ each_question.contestent.profile_pic.url }}"
+                     alt="{{ each_question.contestent }}"
+                     style="width:30px;height:30px" >
+              {% endfor %}
+            {% else %}
+              <b>.....</b>
+            {% endif %}
+          </td>
+          <td>
+            {% if question.S %}
+              {% for each_question in question.S %}
+                <img class='rounded-circle'
+                     src="{{ each_question.contestent.profile_pic.url }}"
+                     alt="{{ each_question.contestent }}"
+                     style="width:30px;height:30px" >
+              {% endfor %}
+            {% else %}
+              <b>.....</b>
+            {% endif %}
+          </td> 
         </tr>
       {% endfor %}
     </table>

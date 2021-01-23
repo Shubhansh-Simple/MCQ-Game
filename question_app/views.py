@@ -115,7 +115,6 @@ def FormProcessing( request, question_id=None ):
                 
                 #When the answer is correct
                 else:
-                    # increment.
                     request.user.increase_winning_prize
                     request.user.increase_correct_answers
 
@@ -167,10 +166,26 @@ class ResultView( LoginRequiredMixin,TemplateView ):
         return context
 
 
-class FullResultView( ListView ):
-    model               = Question
-    template_name       = 'full_result.html'
-    context_object_name = 'question_obj'
+def FullResult( request ):
+    '''Combine users with question as per their answers'''
+
+    total_queryset = []
+
+    for x in range( 1, Question.objects.total_questions+1 ):
+
+        question_obj = Question.objects.get( question_number__question_number=x ) 
+        new = { 'question_obj' : question_obj }
+
+        for answer_options in ['S','W','R']:
+
+            new[ answer_options ] = Attempt.objects.filter(\
+                                              contestent_question=question_obj,\
+                                              contestent_answer=answer_options
+                                             )
+        total_queryset.append(new)
+        del new
+    return render( request, 'full_result.html', { 'questions' : total_queryset })
+
 
 
  
