@@ -181,7 +181,10 @@ def FullResult( request ):
             new[ answer_options ] = Attempt.objects.filter(\
                                               contestent_question=question_obj,\
                                               contestent_answer=answer_options
-                                             )
+                                             ).exclude( contestent__username__endswith='_demo',
+                                                        contestent__is_staff=True
+                                                      )
+
         total_queryset.append(new)
         del new
     return render( request, 'full_result.html', { 'questions' : total_queryset })

@@ -63,7 +63,7 @@
         </th>
       </thead>
   
-      {% for question in questions %}
+      {% for question in questions reversed %}
         <tr class='border_bottom' style=''>
           <td>
             {% if question.question_obj.question_image %}
