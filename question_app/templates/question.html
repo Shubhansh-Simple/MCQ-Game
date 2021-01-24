@@ -6,7 +6,6 @@
 {% endblock title %}
  
 {% block remaining_content %}
-  {% include 'disabled_back_button.html' %}
 {% endblock remaining_content %}
 
 
@@ -99,11 +98,10 @@
     <br>
     Required Pushes - {{ passing_pushes }}
   </p>
+  <b id='timer_count' class='rounded-circle bg-dark text-success display-4'></b>
 {% endblock additional_text %}
 
 {% block body_block %}
-
-
 
 <div class="container">
   <!-- Trigger the modal with a button -->
@@ -183,9 +181,12 @@
 
           <!--Fresh Question-->
           {% else %}
+            <script src="{% static 'js/question_timer.js' %}"
+                    type='text/javascript'>
+            </script>
           <td>
             <!--SKIP-->
-            <input class='btn btn-warning' name='image_selected' type='submit' value='Skip Kiya Jaye'>
+            <input id='skip_button_id' class='btn btn-warning' name='image_selected' type='submit' value='Skip Kiya Jaye'>
           </td>
           <td>
             <!--LOCK-->

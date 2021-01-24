@@ -179,7 +179,6 @@ class AttemptManager( models.Manager ):
         return Attempt.objects.filter( contestent=logged_in_user,contestent_answer='S' ).count()
 
 
-
 class Attempt( models.Model ):
     '''Bind User's answer with attempt question 'S'kip 'R'ight 'W'rong'''
 
@@ -189,8 +188,10 @@ class Attempt( models.Model ):
             ('R','R'),
         )
 
-    contestent          = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete=models.CASCADE )
-    contestent_question = models.ForeignKey( Question,                 on_delete=models.CASCADE )
+    contestent          = models.ForeignKey( settings.AUTH_USER_MODEL,
+                                             on_delete=models.CASCADE )
+    contestent_question = models.ForeignKey( Question,
+                                             on_delete=models.CASCADE )
     contestent_answer   = models.CharField( max_length=1,
                                             choices=CHOICES,
                                             help_text='Enter right answer - Skip,Right,Wrong'

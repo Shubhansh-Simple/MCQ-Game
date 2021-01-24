@@ -1,4 +1,4 @@
-from django.views.generic           import TemplateView,ListView
+from django.views.generic           import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins     import LoginRequiredMixin
 from django.contrib                 import messages
@@ -78,6 +78,8 @@ def QuestionPage( request, question_id=None ):
             context       = {
                               'question'          : question_obj,
                               'passing_pushes'    : Question.objects.passing_pushes,
+
+                              # front-end change if question is already answered
                               'answered_question' : Attempt.objects.is_attempt_question(\
                                                                                         request.user,\
                                                                                         question_obj \
@@ -94,14 +96,15 @@ def FormProcessing( request, question_id=None ):
     '''Take form inputs,then redirect with message after comparision.'''
 
     if request.method == 'POST':
-
+        
         obj_numbering = get_object_or_404( Numbering, question_number=question_id )
         question_obj  = get_object_or_404( Question, question_number=obj_numbering )
 
         if not Attempt.objects.is_attempt_question( request.user , question_obj ):
-            answer      = request.POST.get('image_selected') 
-            attempt_obj = Attempt( contestent=request.user, contestent_question=question_obj )
 
+            answer      = request.POST.get('image_selected') 
+            attempt_obj = Attempt( contestent=request.user,\
+                                   contestent_question=question_obj )
 
             '''Comparision with answer'''
             if answer in ['A','B','C','D']:
@@ -121,18 +124,20 @@ def FormProcessing( request, question_id=None ):
                     messages.success( request, 'Sahi Jawab!, 10rs paytm cash')
                     attempt_obj.contestent_answer='R'
 
+                # save
+                request.user.save()
+                attempt_obj.save()
+                
+                # Next question
+                return redirect( 'question', question_id=question_id-1 )
+
+
             #When the question is skipped
             else:
                 messages.warning( request,'Aapki gand phat gyi lgta' )
                 attempt_obj.contestent_answer='S'
-
-            # save
-            request.user.save()
-            attempt_obj.save()
+                attempt_obj.save()
             
-            # Next question
-            return redirect( 'question', question_id=question_id-1 )
-
         # add msg if already answered
         else:
             messages.warning( request,
