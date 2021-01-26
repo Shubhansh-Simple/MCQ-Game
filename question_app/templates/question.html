@@ -92,7 +92,7 @@
 
 {% block additional_text %}
   <p class='text-light'>
-    Sawal      - {{ question.question_number }}
+    Sawal      - <b id='question_number_id_html'>{{ question.question_number }}</b>
     <br>
     Contestent - {{ user.username|title }}
     <br>
@@ -132,7 +132,9 @@
 <!--Option Display Section-->
 <section class="jumbotron text-center bg-dark">
   <div class="container table-responsive">
-    <form action="{% url 'form_processing' question.question_number %}" method="POST">
+    <form action="{% url 'form_processing' question.question_number %}"
+          method="POST" >
+
       {% csrf_token %}
       <h2 class='text-white'>Options</h2>
       <table class="table">
@@ -140,13 +142,13 @@
           <td>
             <label>
               <input type="radio" name="image_selected" value="A" >
-              <img class="img-fluid"  src="{{ question.option_one_image.url }}"  > 
+              <img class="img-fluid" src="{{ question.option_one_image.url }}"  > 
             </label>
           </td>
           <td>
             <label>
               <input type="radio" name="image_selected" value="B" >
-              <img class="img-fluid"  src="{{ question.option_two_image.url }}"  > 
+              <img class="img-fluid" src="{{ question.option_two_image.url }}"  > 
             </label>
           </td>
         </tr>
@@ -186,11 +188,18 @@
             </script>
           <td>
             <!--SKIP-->
-            <input id='skip_button_id' class='btn btn-warning' name='image_selected' type='submit' value='Skip Kiya Jaye'>
+            <input id='skip_button_id'
+                   class='btn btn-warning'
+                   name='image_selected'
+                   type='submit'
+                   value='Skip Kiya Jaye' >
           </td>
           <td>
             <!--LOCK-->
-            <input class='btn btn-success text-dark' type='submit' value='Lock Kiya Jaye'>
+            <input id='lock_button_id' 
+                   class='btn btn-success text-dark'
+                   type='submit' 
+                   value='Lock Kiya Jaye' >
           </td>
           {% endif %}
         </tr>
@@ -198,7 +207,10 @@
         <tr>
           <td colspan=2>
             <input class='btn btn-sm btn-danger font-weight-bold'
-              type='button' value='Quit Kiya Jaye ?' data-toggle="modal" data-target="#myModal" >
+                   type='button'
+                   value='Quit Kiya Jaye ?' 
+                   data-toggle="modal"
+                   data-target="#myModal" >
           </td>
         </tr>
       </table>
