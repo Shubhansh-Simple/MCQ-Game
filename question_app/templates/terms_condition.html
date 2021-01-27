@@ -9,7 +9,12 @@
 
 {% block body_block %}
 
-<h3 class='text-dark text-center'>Whiskey needs {{ question.passing_pushes }} pushes.</h3>
+<h3 class='text-dark text-center'>
+  Whiskey needs 
+  <b class=text-success>{{ question.passing_pushes }}/<b class='text-danger'>{{ question.total_questions }}</b>
+    right answers </b> to get
+  <i class='text-danger'>pregnant</i>
+</h3>
 <div class="container  text-center bg-warning">
   
   <div class='container text-center'>
@@ -27,7 +32,7 @@
     <br>
   </div>
 
-  <h6>You understand soon.</h6>
+  <h6>Help Aakash Jain to make whiskey pregnant.</h6>
 
 </div>
 
@@ -39,19 +44,21 @@
     <div class="modal-dialog">
     
       <!-- Modal content-->
-      <div class="modal-content bg-secondary">
+      <div class="modal-content whiskey-table">
         <div class="modal-header">
-          <h4 class="modal-title">Conditions</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-white">Conditions</h4>
+          <button type="button" 
+                  class="close text-white bg-danger"
+                  data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body bg-dark">
-		  <ul class="list-group bg-dark">
+        <div class="modal-body ">
+		  <ul class="list-group">
 
-			 <li class="list-group-item text-muted bg-dark"> यह ऐप केवल मनोरंजन प्रयोजनों के लिए है और हमारा किसी व्यक्ति, समुदाय, संप्रदाय या धर्म की भावनाओं को आहत करने का इरादा नहीं है
+			 <li class="list-group-item text-muted whiskey-table"> यह ऐप केवल मनोरंजन प्रयोजनों के लिए है और हमारा किसी व्यक्ति, समुदाय, संप्रदाय या धर्म की भावनाओं को आहत करने का इरादा नहीं है
              </li>
-			 <li class="text-center list-group-item text-light bg-dark">Saral Bhasha Meh</li>
-			 <li class="list-group-item text-muted bg-dark">Na mare appki.</li>
-			 <li class="list-group-item text-muted bg-dark">Na maro aap hmari</li>
+			 <li class="text-center list-group-item text-light whiskey-table">Saral Bhasha Meh</li>
+			 <li class="list-group-item text-muted whiskey-table">Na mare appki.</li>
+			 <li class="list-group-item text-muted whiskey-table">Na maro aap hmari</li>
 		  </ul> 
         </div>
         <div class="modal-footer">
@@ -70,12 +77,30 @@
 </div>
 
   <div class='text-center'>
+      <br>
+      <h3 class='bg-danger text-white'>Game Rules</h3>
+      <div class='container bg-dark text-white'>
+        <br>
+        <h5 class='text-danger'>Pay Attention <br>Brothers</h5><hr>
+        <p><b>Tick</b> the option then click 
+           <b class='text-warning'>Lock</b> button.
+        </p><hr>
+        <p>You can answer the question <b>one time only</b>.</p><hr>
+        <p>You can <b>quit</b> the game anytime you want.</p><hr>
+        <p>You get <b>20 seconds</b> to answer the question.</p><hr>
+        <p>Question will be <b>auto-skip</b> when timer ends.</p><hr>
+        <p>Each right answer takes male pug semen closer to whiskey vagina.</p><hr>
+        <p class='text-warning'>You can skip the question if you don't like</p><hr>
+    </div>
+
     <br>
-    <p> <b class='text-danger'>Note:</b> Accept button pr click krne se aap hmari sari terms and conditions maan rhe h (Samjhe baa).</p>
+    <p> <b class='text-danger'>Note: </b> By clicking Accept button you are accepting all our policies.</p>
 
   <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal">
     Check Kiya Jaye
   </button>
+
+
 
     <div class='container'>
       <br>
@@ -83,9 +108,6 @@
       <p class='text-muted'>
       	Laxmi Chits Fund investments are subject to manoj risks, read all scheme related documents carefully ;)
       </p>
-    
-      <a></a>
-
     </div>
 
   </div>

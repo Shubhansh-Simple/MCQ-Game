@@ -15,13 +15,22 @@
     </p>
 
     <form method='post'>
+      {{ form.non_field_errors }}
       {% csrf_token %}
-      <b>{{ form.as_p }}</b>
+      <p>
+        <b>{{ form.username }}</b>
+        <small>{{ form.username.errors }}</small>
+      </p>
+
+      <p>
+        <b>{{ form.password }}</b>
+        <small>{{ form.password.errors }}</small>
+      </p>
+
       <button type='submit' class='btn btn-success'>Play Game</button>
     </form>
     <br>
-
   </div>
 
-{% endblock body_block %}
 
+{% endblock body_block %}
