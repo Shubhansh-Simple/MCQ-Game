@@ -188,7 +188,8 @@ def FullResult( request ):
                                               contestent_answer=answer_options)\
                                               .exclude(\
                                                  contestent__username__endswith='_demo',\
-                                                 contestent__is_staff=True
+                                                 contestent__is_staff=True,
+                                                 contestent__is_complete_quiz=False
                                                       )
 
         total_queryset.append(new)
