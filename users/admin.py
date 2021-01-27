@@ -2,7 +2,7 @@ from django.contrib             import admin
 from django.contrib.auth.admin  import UserAdmin
 
 from .forms                     import CustomUserChangeForm , CustomUserCreationForm
-from .models                    import CustomUser
+from .models                    import CustomUser,Contributor
 
 class CustomUserAdmin( UserAdmin ):
     '''Show extra fields to the AdminSite.'''
@@ -23,6 +23,7 @@ class CustomUserAdmin( UserAdmin ):
                            ),
 
 admin.site.register( CustomUser,CustomUserAdmin )
+admin.site.register( Contributor )
 
 
 

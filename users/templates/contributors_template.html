@@ -1,0 +1,72 @@
+{% extends 'base_template.html' %}
+
+{% block title %}
+  Contributors
+{% endblock title %}
+
+<!--Extra code under head tag-->
+{% block remaining_content %}
+  {% load staticfiles %}
+{% endblock remaining_content %}
+
+{% block whiskey %}
+<br>
+{% endblock whiskey %}
+
+{% block profile %}
+
+  {% block results %}
+  {% endblock results %}
+  
+  {% block question_title %}
+    <div class='text-center'>
+      <h4 class='bg-warning'>Contributors of this Application</h4>
+      <br>
+    </div>
+  {% endblock question_title %}
+  
+  {% block additional_text %}
+  {% endblock additional_text %}
+
+{% endblock profile %}
+
+
+{% block body_block %}
+  <div class='text-center container'>
+
+    <div class="row">
+      {% if contributor_list %}
+        {% for contributor in contributor_list %}
+          <!--List View-->
+            <div class="col-lg-4 bg-secondary">
+              <br>
+              <img class="rounded-circle" 
+                   src="{{ contributor.profile_pic.url }}"
+                   alt="Contributor Picture"
+                   width="240"
+                   height="240" > 
+              <h2 class='text-white'>{{ contributor.first_name }} {{ contributor.last_name}}</h2>
+              <h5>({{ contributor.talent}})</h5>
+              <p>{{ contributor.about }}</p>
+              <a href="mailto:{{ contributor.email}}" 
+                   class="btn btn-danger">
+                    &nbsp; Email Me &nbsp;
+              </a>
+              <br>
+              <br>
+              <br>
+            </div><!-- /.col-lg-4 -->
+        {% endfor %}
+      {% else %}
+        <h1>No Contributor Found</h1>
+      {% endif %}
+    </div><!-- /.row -->
+
+
+  </div>
+{% endblock body_block %}
+
+
+
+
+

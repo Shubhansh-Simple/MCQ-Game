@@ -1,7 +1,7 @@
 from django.shortcuts              import render
 from django.contrib.auth.mixins    import LoginRequiredMixin
 from django.views.generic          import ListView
-from .models                       import CustomUser
+from .models                       import CustomUser,Contributor
 from .utils                        import get_plot
 
 
@@ -32,6 +32,9 @@ def DataAnalysis( request ):
 
     return render( request , 'data_analysis.html', { 'chart':chart } )
         
-
+class ContributorsListView( ListView ):
+    model               = Contributor
+    template_name       = 'contributors_template.html'
+    context_object_name = 'contributor_list'
 
 

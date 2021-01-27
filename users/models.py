@@ -3,7 +3,6 @@ from django.db                  import models
 from question_app.models        import Question,CustomResizeImage
 
 
-
 class CustomUser( AbstractUser,CustomResizeImage ):
     '''Add some extra fields to the user model.'''
 
@@ -73,5 +72,34 @@ class CustomUser( AbstractUser,CustomResizeImage ):
 
     def __str__( self ):
         return str( self.username ).capitalize()
+
+
+class Contributor( models.Model ):
+    '''Who contributes this project'''
+
+    first_name  = models.CharField( max_length=50 )
+    last_name   = models.CharField( max_length=50 )
+    talent      = models.CharField( max_length=50 )
+    about       = models.CharField( max_length=200,\
+                                    help_text ='How it\'s contribute to this project')
+    email       = models.EmailField()
+
+    profile_pic = models.ImageField( upload_to='profile_pic/',
+                                          null=True,
+                                          blank=True,
+                                          help_text='Upload your profile pic\
+                                                     in (png/jpg format only)' 
+                                   )
+
+    def __str__( self ):
+        return self.first_name + ' ' + self.last_name
+
+
+
+
+
+
+
+
 
 
