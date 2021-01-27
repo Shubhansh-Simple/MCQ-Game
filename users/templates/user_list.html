@@ -40,11 +40,11 @@
           <tr>
             <td>
               {% if user.profile_pic %}
-                <img class="img-fluid"  src="{{ user.profile_pic.url}}">
+                <img class="img-fluid rounded-circle"  src="{{ user.profile_pic.url}}">
               {% else %}
-                <img class="img-fluid" 
+                <img class="img-fluid rounded-circle" 
                  src="{% static 'default_user_pic.png' %}"
-                 alt='Male Pug'>
+                 alt='User Pic'>
               {% endif %}
                 <br>
                 <h4 class='text-white'>{{ user.username|title }}</h4>
@@ -62,7 +62,7 @@
                         {% endif %}
                       banaya
                   {% else %}
-                    ..........
+                    <small class='text-muted'>Unfinished Game</small>
                   {% endif %}
                 </small>
             </td>
@@ -72,12 +72,28 @@
     </div>
   </section>
   <div class='text-center'>
-    <a class='btn btn-dark text-danger' href="{% url 'result' %}">
-      My Result
-    </a>
-    <a class='btn btn-dark text-danger' href="{% url 'analyse_data' %}">
-      Analyse Results
-    </a>
+
+    <table class='table'>
+      <tr>
+        <td>
+          <a class='btn btn-dark text-danger' href="{% url 'result' %}">
+           &nbsp; &nbsp; My Result &nbsp; &nbsp;
+          </a>
+        </td>
+        <td>
+          <a class='btn btn-dark text-danger' href="{% url 'analyse_data' %}">
+            Analyse Results
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <a class='btn btn-lg btn-danger text-white' href="{% url 'full_result' %}">
+            Special Page
+          </a>
+        </td>
+      </tr>
+    </table>
   </div>
 
 {% endblock body_block %}
