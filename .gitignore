@@ -23,3 +23,5 @@ media
 
 Pipfile
 Pipfile.lock
+
+users/migrations/

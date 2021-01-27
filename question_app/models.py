@@ -28,7 +28,7 @@ class CustomResizeImage():
             return InMemoryUploadedFile(
                     modified_image,
                     'ImageField',
-                    "%s.jpg" %image_name,
+                    "%s" %image_name,
                     'image/jpeg',
                     modified_image.getbuffer().nbytes,
                     None
@@ -129,26 +129,26 @@ class Question( models.Model,CustomResizeImage ):
 
             self.question_image = self.image_resize( self.question_image.read(),
                                                      (200,200) ,
-                                                     self.question_image.name 
+                                                     'question_image.jpg'
                                                    )
 
         self.option_one_image   = self.image_resize( self.option_one_image.read(),
                                                      (100,100),
-                                                     self.option_one_image.name 
+                                                     'option_one_image.jpg'
                                                    )
 
         self.option_two_image   = self.image_resize( self.option_two_image.read(),
                                                      (100,100),
-                                                     self.option_two_image.name 
+                                                     'option_two_image.jpg'
                                                    )
 
         self.option_three_image = self.image_resize( self.option_three_image.read(),
                                                      (100,100),
-                                                     self.option_three_image.name 
+                                                     'option_three_image.jpg'
                                                    )
         self.option_four_image  = self.image_resize( self.option_four_image.read(),
                                                      (100,100),
-                                                     self.option_four_image.name 
+                                                     'option_four_image.jpg'
                                                    )
         
         super().save( *args,**kwargs )
@@ -202,8 +202,6 @@ class Attempt( models.Model ):
         # user can't answer the same question
         unique_together = ( 'contestent', 'contestent_question', )
         ordering        = ['contestent','contestent_question', ]
-
-
 
     def __str__( self ):
         return str( self.contestent ) + ' - ' + 'Q. ' + str( self.contestent_question )[:1] + ')'
