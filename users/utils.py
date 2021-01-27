@@ -17,7 +17,7 @@ def get_graph():
 
     return graph
 
-def get_plot( correct_answers,skip_questions,username ):
+def get_plot( correct_answers,username ):
     '''Entire matplotlib code shape colour etc.'''
 
     plt.switch_backend('AGG')
@@ -34,13 +34,6 @@ def get_plot( correct_answers,skip_questions,username ):
              color='green',
              align='edge',
              label='Right Answers' )
-
-    plt.bar( index+width,
-             skip_questions,
-             width-0.02,
-             color='red',
-             align='edge',
-             label='Skip Questions' )
     
     #plt.tight_layout()
     plt.legend( loc='upper right')

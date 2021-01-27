@@ -21,14 +21,14 @@ def DataAnalysis( request ):
 
     username_list        = []
     correct_answers_list = []
-    skiped_question_list = []
+    #skiped_question_list = []
 
     for x in CustomUser.whose_quiz_complete():
         username_list.append( x.username )
         correct_answers_list.append( x.correct_answers )
         #skiped_question_list.append( x.total_skip_question )
         
-    chart = get_plot( correct_answers_list,skiped_question_list,username_list )
+    chart = get_plot( correct_answers_list,username_list )
 
     return render( request , 'data_analysis.html', { 'chart':chart } )
         
