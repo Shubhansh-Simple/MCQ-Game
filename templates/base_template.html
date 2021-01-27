@@ -3,7 +3,7 @@
 <head>
   {% load staticfiles %}
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -21,13 +21,17 @@
   {% endblock remaining_content %}
 
   <style>
-  
-  .whiskey-table{
-    background-color:black;
-    margin : 0;
-    padding : 0;
-    border : 0;
-}
+
+    .footer{
+      height : 40px;
+    }
+    
+    .whiskey-table{
+      background-color:black;
+      margin : 0;
+      padding : 0;
+      border : 0;
+    }
 
     [type=radio] { 
       position: absolute;
@@ -79,10 +83,36 @@
 
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="text-center">
-        <h4 class='text-white'>Kaun Banega <b>Laxmi-Pati</b> ?</h4>
+      <h5 class='text-white'>
+        Kaun Banega <b>Laxmi-Pati</b> ?
+      </h5>
+
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+        >
+      </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <hr>
+        <div class="navbar-nav ml-auto">
+          <a class="text-muted nav-item nav-link active"
+             href="{% url 'terms_condition' %}" >
+            Home 
+          </a>
+          <a class="text-muted nav-item nav-link active"
+             href="{% url 'contributors_list' %}" >
+            About 
+          </a>
+
+        </div>
       </div>
     </nav>
+
   </header>
 
   <main role="main">
@@ -108,7 +138,7 @@
               </b>
             </h1>
             {% block additional_text %}
-              <p class="lead text-dark">All are gangster until the real one comes in.</p>
+              <small class="text-dark">All are gangster until the real one comes in.</small>
             {% endblock additional_text %}
           </div>
       </section>
@@ -123,12 +153,11 @@
 
   </main>
 
-  <footer class="text-muted">
-    <br>
-    <div class="text-center text-muted whiskey-table">
+  <footer>
+    <div class="text-center bg-dark footer">
       <p>
-        <small class='text-muted'>
-          © Site by - <span class='text-light'>shubhansh7777@gmail.com</span>
+        <small class='text-white'>
+          © Site by - <span class='text-muted'>shubhansh7777@gmail.com</span>
         </small>
       </p>
       </div>
