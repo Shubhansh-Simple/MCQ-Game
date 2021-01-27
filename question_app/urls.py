@@ -6,15 +6,9 @@ from .views      import QuestionPage,\
                         ResultView,\
                         FullResult
 
-# it's imported from different source
-from django.views.generic.base import TemplateView
-
 urlpatterns = [
     path('',     TermsConditionView.as_view(), name='terms_condition'),
      
-    # if user try to replay the game ( redirect here ).
-    path('no_replay/', TemplateView.as_view( template_name='no_replay.html'), name='no_replay' ),
-
     path('question/<int:question_id>/',   QuestionPage,   name='question'),
 
     # do the backend stuff.

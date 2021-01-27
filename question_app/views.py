@@ -88,7 +88,7 @@ def QuestionPage( request, question_id=None ):
             return render( request , 'question.html' ,context=context)
 
         raise Http404('Question Not Found')
-    return redirect( 'no_replay' )
+    return redirect( 'result' )
 
 
 @login_required()
@@ -185,9 +185,10 @@ def FullResult( request ):
 
             new[ answer_options ] = Attempt.objects.filter(\
                                               contestent_question=question_obj,\
-                                              contestent_answer=answer_options
-                                             ).exclude( contestent__username__endswith='_demo',
-                                                        contestent__is_staff=True
+                                              contestent_answer=answer_options)\
+                                              .exclude(\
+                                                 contestent__username__endswith='_demo',\
+                                                 contestent__is_staff=True
                                                       )
 
         total_queryset.append(new)
