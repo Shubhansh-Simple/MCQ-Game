@@ -65,8 +65,8 @@ class CustomUser( AbstractUser,CustomResizeImage ):
 
             self.profile_pic = self.image_resize( self.profile_pic.read(),
                                                      (200,200) ,
-                                                     self.profile_pic.name 
-                                                   )
+                                                     'profile_picture.jpg' 
+                                                )
         super().save( *args,**kwargs )
 
 
