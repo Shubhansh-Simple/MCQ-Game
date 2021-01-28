@@ -67,9 +67,10 @@ def QuestionPage( request, question_id=None ):
                     else:
                         # redirect to somewhere
                         return redirect( 'question',\
-                                          question_id= list( \
-                                                             non_attempt_questions( request )\
-                                                           )[0].question_number.question_number
+                                          question_id=\
+                                            list( 
+                                               non_attempt_questions( request )\
+                                                )[0].question_number.question_number
                                        )
 
                 raise Http404('Question Not Found')
@@ -154,7 +155,9 @@ def Quit( request ):
    
     # Non common values i.e. left questions
     for x in non_attempt_questions( request ) :
-        Attempt( contestent=request.user , contestent_question=x , contestent_answer='S').save()
+        Attempt( contestent=request.user,
+                 contestent_question=x,
+                 contestent_answer='S').save()
     
     return finish_the_game( request )
 
@@ -171,6 +174,7 @@ class ResultView( LoginRequiredMixin,TemplateView ):
         return context
 
 
+@login_required()
 def FullResult( request ):
     '''Combine users with question as per their answers'''
 
