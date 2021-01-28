@@ -8,7 +8,10 @@
 
 
 {% block body_block %}
-
+<hr>
+<div class='container-fluid text-center bg-dark text-success'>
+  <h3>Manoj Neeti Special</h3>
+</div>
 
 <div class="container  text-center bg-warning">
   
@@ -41,10 +44,10 @@
     <br>
   </div>
 
-  <h6>This is <b>Manoj Neeti</b></h6>
 
 </div>
 
+<hr>
 <div class="container">
   <!-- Trigger the modal with a button -->
 
@@ -71,7 +74,8 @@
 		  </ul> 
         </div>
         <div class="modal-footer">
-          <a class="btn btn-default btn-success" href="{% url 'question' question.total_questions %}">
+          <a class="btn btn-default btn-success"
+             href="{% url 'question' question_id_to_redirect %}">
             Accept Ki Jaye
           </a>
           <a class="btn btn-default btn-danger" href="{% url 'logout' %}#login_section_id">
@@ -97,7 +101,7 @@
         <p>You can answer the question <b>only one time</b>.</p><hr>
         <p>You get <b>20 seconds</b> to answer the question.</p><hr>
         <p>Question will be <b>auto-skip</b> when timer ends.</p><hr>
-        <p class='text-warning'>Feel free to skip any question,you don't like.</p><hr>
+        <p class='text-warning'>Feel free to skip any question.</p><hr>
         <p>You can <b class='text-danger'>quit</b> the game anytime you want.</p><hr>
         <p class='text-warning'><b>
           आपका हर सही जवाब व्हिस्की को जर्बवाती बनाने में एक योगदान है !</p><hr</b></p><hr>

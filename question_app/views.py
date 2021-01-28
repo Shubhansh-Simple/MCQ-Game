@@ -6,6 +6,7 @@ from django.http                    import Http404
 from django.shortcuts               import get_object_or_404,render,redirect
 from .models                        import Question,Numbering,Attempt
 
+
 #DRY PRINCIPLES
 def finish_the_game( request ):
     '''Make is_complete_quiz True,and redirect to Result page'''
@@ -30,6 +31,15 @@ def non_attempt_questions( request ):
 
 
 #DRY PRINCIPLES
+def latest_non_attempt( request ):
+    '''Returns question id of (first) non attempt question of user.'''
+
+    return list( \
+                non_attempt_questions( request )\
+               )[-1].question_number.question_number
+
+
+#DRY PRINCIPLES
 def is_attempt_all_question( request ):
     '''User attempt all questions or not (T/F)'''
 
@@ -37,13 +47,29 @@ def is_attempt_all_question( request ):
             Attempt.objects.attempt_questions( request.user ).count()
 
 
+############################
+#### Actual View Starts ####
+############################
+
 class TermsConditionView( LoginRequiredMixin,TemplateView ):
     '''Terms and conditions page.'''
 
     template_name = 'terms_condition.html'
 
     def get_context_data( self,**kwargs ):
+        '''If user not completing the quiz and re-visit'''
+
         context                     = super().get_context_data( **kwargs )
+
+        if not self.request.user.is_complete_quiz:
+
+            if Attempt.objects.attempt_questions( self.request.user ):
+                '''redirect to the latest non-attempt-question'''
+
+                context[ 'question_id_to_redirect' ] = latest_non_attempt( self.request )
+            else:
+                context[ 'question_id_to_redirect' ] = Question.objects.total_questions
+
         context[ 'question' ]       = Question.objects
         return context
 
@@ -67,10 +93,7 @@ def QuestionPage( request, question_id=None ):
                     else:
                         # redirect to somewhere
                         return redirect( 'question',\
-                                          question_id=\
-                                            list( 
-                                               non_attempt_questions( request )\
-                                                )[0].question_number.question_number
+                                          question_id=latest_non_attempt( request )
                                        )
 
                 raise Http404('Question Not Found')
@@ -82,8 +105,8 @@ def QuestionPage( request, question_id=None ):
 
                               # front-end change if question is already answered
                               'answered_question' : Attempt.objects.is_attempt_question(\
-                                                                                        request.user,\
-                                                                                        question_obj \
+                                                                    request.user,\
+                                                                    question_obj \
                                                                                        )\
                             }
             return render( request , 'question.html' ,context=context)
