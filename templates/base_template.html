@@ -15,7 +15,10 @@
   </title>
 
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
 
   {% block remaining_content %}
   {% endblock remaining_content %}
@@ -94,7 +97,7 @@
               aria-controls="navbarNavAltMarkup"
               aria-expanded="false"
               aria-label="Toggle navigation">
-        >
+        <b>></b>
       </button>
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -108,6 +111,13 @@
              href="{% url 'contributors_list' %}" >
             About 
           </a>
+          {% if user.is_authenticated %}
+            <a class="text-danger nav-item nav-link active"
+               href="{% url 'logout' %}#login_section_id" >
+               Logout
+            </a>
+          {% endif %}
+
 
         </div>
       </div>
