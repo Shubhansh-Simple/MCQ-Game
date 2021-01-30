@@ -31,7 +31,7 @@
 
   <br>
   <div class='text-center'>
-    <h2 class='text-danger'>All Candidates</h2>
+    <h2 class='text-danger'>All Contestents</h2>
   </div>
   <section class="jumbotron text-center bg-dark">
     <div class="container table-responsive">
@@ -50,21 +50,22 @@
                 <h4 class='text-white'>{{ user.username|title }}</h4>
             </td>
             <td> 
-              <b>Right Answers</b>
-              <h3 class='text-success'>{{ user.correct_answers }}</h3> 
+              {% if user.is_complete_quiz %}
+                <b>Right Answers</b>
+                <h3 class='text-success'>{{ user.correct_answers }}</h3> 
                 <small class='text-white'>
-                  {% if user.is_complete_quiz %}
-                      Whiskey ko 
-                        {% if user.is_pregnant %}
-                          <b class='text-success'>garbhwati</b> 
-                        {% else %}
-                          <b class='text-danger'>banj</b>
-                        {% endif %}
-                      banaya
-                  {% else %}
-                    <small class='text-muted'>Unfinished Game</small>
-                  {% endif %}
-                </small>
+                  Whiskey ko 
+                    {% if user.is_pregnant %}
+                      <b class='text-success'>garbhwati</b> 
+                    {% else %}
+                      <b class='text-danger'>banj</b>
+                    {% endif %}
+                  banaya
+              {% else %}
+              <br>
+              <br>
+                <small class='text-muted'>Unfinished Game</small>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}
