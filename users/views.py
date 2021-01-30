@@ -3,9 +3,10 @@ from django.contrib.auth.mixins    import LoginRequiredMixin
 from django.views.generic          import ListView
 from .models                       import CustomUser,Contributor
 from .utils                        import get_plot
+from KbcProject.mixins             import CustomQuizCompleteMixin
 
 
-class UserListView( LoginRequiredMixin,ListView ):
+class UserListView( LoginRequiredMixin, CustomQuizCompleteMixin, ListView ):
     '''All the user in database'''
 
     model               = CustomUser
@@ -31,8 +32,11 @@ def DataAnalysis( request ):
     chart = get_plot( correct_answers_list,username_list )
 
     return render( request , 'data_analysis.html', { 'chart':chart } )
-        
+       
+
 class ContributorsListView( ListView ):
+    '''List of the authors who helps me in this project'''
+
     model               = Contributor
     template_name       = 'contributors_template.html'
     context_object_name = 'contributor_list'
