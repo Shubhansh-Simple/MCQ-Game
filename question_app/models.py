@@ -159,6 +159,7 @@ class Question( models.Model,CustomResizeImage ):
 
 
 class AttemptManager( models.Manager ):
+
     
     def attempt_questions( self,logged_in_user ):
         '''Returns all the attempt questions by the user'''

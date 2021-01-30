@@ -1,10 +1,11 @@
 from django.views.generic           import TemplateView
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib.auth.mixins     import LoginRequiredMixin
 from django.contrib                 import messages
 from django.http                    import Http404
 from django.shortcuts               import get_object_or_404,render,redirect
 from .models                        import Question,Numbering,Attempt
+from KbcProject.mixins              import CustomQuizCompleteMixin
 
 
 #DRY PRINCIPLES
@@ -185,7 +186,7 @@ def Quit( request ):
     return finish_the_game( request )
 
 
-class ResultView( LoginRequiredMixin,TemplateView ):
+class ResultView( LoginRequiredMixin, CustomQuizCompleteMixin, TemplateView ):
     '''Showing the logged-in user's result page.'''
 
     template_name = 'user_result.html'
