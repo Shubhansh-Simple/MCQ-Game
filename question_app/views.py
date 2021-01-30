@@ -211,14 +211,15 @@ def FullResult( request ):
 
         for answer_options in ['S','W','R']:
 
-            new[ answer_options ] = Attempt.objects.filter(\
-                                              contestent_question=question_obj,\
-                                              contestent_answer=answer_options)\
-                                              .exclude(\
-                                                 contestent__username__endswith='_demo',\
-                                                 contestent__is_staff=True,
-                                                 contestent__is_complete_quiz=False
-                                                      )
+            new[ answer_options ] = Attempt.objects.filter( \
+                                                  contestent__is_staff=False,\
+                                                  contestent__is_complete_quiz=True,\
+                                                  contestent_question=question_obj,\
+                                                  contestent_answer=answer_options\
+                                                          )\
+                                                  .exclude(\
+                                                  contestent__username__endswith='_demo'\
+                                                  )
 
         total_queryset.append(new)
         del new

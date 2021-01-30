@@ -65,6 +65,7 @@
   
       {% for question in questions reversed %}
         <tr class='border_bottom' style=''>
+
           <td>
             {% if question.question_obj.question_image %}
               <img class='rounded-circle' src='{{ question.question_obj.question_image.url }}' 
@@ -72,23 +73,34 @@
             {% endif %}
             <p>Q.{{ question.question_obj.question_title }}</p>
           </td>
+
           <td>
             {% if question.R %}
               {% for each_question in question.R %}
                 <img class='rounded-circle'
-                     src="{{ each_question.contestent.profile_pic.url }}"
-                     alt="{{ each_question.contestent }}"
+                     {% if each_question.contestent.profile_pic %}
+                       src="{{ each_question.contestent.profile_pic.url }}"
+                     {% else %}
+                       src="{% static 'default_user_pic.png' %}"
+                     {% endif %}
+                       alt="{{ each_question.contestent }}"
                      style="width:30px;height:30px" >
               {% endfor %}
             {% else %}
               <b>.....</b>
             {% endif %}
           </td>
+
           <td>
             {% if question.W %}
               {% for each_question in question.W %}
                 <img class='rounded-circle'
-                     src="{{ each_question.contestent.profile_pic.url }}"
+                     {% if each_question.contestent.profile_pic %}
+                       src="{{ each_question.contestent.profile_pic.url }}"
+                     {% else %}
+                       src="{% static 'default_user_pic.png' %}"
+                     {% endif %}
+
                      alt="{{ each_question.contestent }}"
                      style="width:30px;height:30px" >
               {% endfor %}
@@ -96,11 +108,17 @@
               <b>.....</b>
             {% endif %}
           </td>
+
           <td>
             {% if question.S %}
               {% for each_question in question.S %}
                 <img class='rounded-circle'
-                     src="{{ each_question.contestent.profile_pic.url }}"
+                     {% if each_question.contestent.profile_pic %}
+                       src="{{ each_question.contestent.profile_pic.url }}"
+                     {% else %}
+                       src="{% static 'default_user_pic.png' %}"
+                     {% endif %}
+
                      alt="{{ each_question.contestent }}"
                      style="width:30px;height:30px" >
               {% endfor %}
@@ -108,6 +126,7 @@
               <b>.....</b>
             {% endif %}
           </td> 
+
         </tr>
       {% endfor %}
     </table>
