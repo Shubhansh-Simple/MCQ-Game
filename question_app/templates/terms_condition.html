@@ -75,7 +75,11 @@
         </div>
         <div class="modal-footer">
           <a class="btn btn-default btn-success"
-             href="{% url 'question' question_id_to_redirect %}">
+             {% if question_id_to_redirect %}
+               href="{% url 'question' question_id_to_redirect %}">
+             {% else %}
+               href="{% url 'result' %}">
+             {% endif %}
             Accept Ki Jaye
           </a>
           <a class="btn btn-default btn-danger" href="{% url 'logout' %}#login_section_id">
