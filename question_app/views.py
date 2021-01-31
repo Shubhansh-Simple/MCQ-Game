@@ -48,10 +48,9 @@ def is_attempt_all_question( request ):
             Attempt.objects.attempt_questions( request.user ).count()
 
 
-############################
-#### Actual View Starts ####
-############################
-
+###################################
+#### Rules of Games like timer ####
+###################################
 class TermsConditionView( LoginRequiredMixin,TemplateView ):
     '''Terms and conditions page.'''
 
@@ -71,52 +70,56 @@ class TermsConditionView( LoginRequiredMixin,TemplateView ):
             else:
                 context[ 'question_id_to_redirect' ] = Question.objects.total_questions
 
-        context[ 'question' ]       = Question.objects
         return context
 
 
+####################################
+#### Question Page with options ####
+####################################
 @login_required()
+@user_passes_test( lambda user: not user.is_complete_quiz ,login_url='result' )
 def QuestionPage( request, question_id=None ):
     '''Show Detail Page with messages.'''
+    
+    if isinstance( question_id,int ):
+        try:
+            obj_numbering = Numbering.objects.get( question_number=question_id )
+
+        except Numbering.DoesNotExist:
+            '''Extra work for result page.'''
+
+            if question_id == 0:
+                if is_attempt_all_question( request ):
+                    return finish_the_game( request )
+                else:
+                    # redirect to somewhere
+                    return redirect( 'question',\
+                                      question_id=latest_non_attempt( request )
+                                   )
+
+            raise Http404('Question Not Found')
+
+        question_obj  = get_object_or_404( Question,  question_number=obj_numbering )
+        context       = {
+                          'question'          : question_obj,
+                          'passing_pushes'    : Question.objects.passing_pushes,
+
+                          # front-end change if question is already answered
+                          'answered_question' : Attempt.objects.is_attempt_question(\
+                                                                request.user,\
+                                                                question_obj \
+                                                                                   )\
+                        }
+        return render( request , 'question.html' ,context=context)
+
+    raise Http404('Question Not Found')
 
 
-    if not request.user.is_complete_quiz:
-        if type(question_id):
-            try:
-                obj_numbering = Numbering.objects.get( question_number=question_id )
-
-            except Numbering.DoesNotExist:
-                '''Extra work for result page.'''
-
-                if question_id == 0:
-                    if is_attempt_all_question( request ):
-                        return finish_the_game( request )
-                    else:
-                        # redirect to somewhere
-                        return redirect( 'question',\
-                                          question_id=latest_non_attempt( request )
-                                       )
-
-                raise Http404('Question Not Found')
-
-            question_obj  = get_object_or_404( Question,  question_number=obj_numbering )
-            context       = {
-                              'question'          : question_obj,
-                              'passing_pushes'    : Question.objects.passing_pushes,
-
-                              # front-end change if question is already answered
-                              'answered_question' : Attempt.objects.is_attempt_question(\
-                                                                    request.user,\
-                                                                    question_obj \
-                                                                                       )\
-                            }
-            return render( request , 'question.html' ,context=context)
-
-        raise Http404('Question Not Found')
-    return redirect( 'result' )
-
-
+###############################################
+#### Check input right/wrong then redirect ####
+###############################################
 @login_required()
+@user_passes_test( lambda user: not user.is_complete_quiz ,login_url='result' )
 def FormProcessing( request, question_id=None ):
     '''Take form inputs,then redirect with message after comparision.'''
 
@@ -173,7 +176,11 @@ def FormProcessing( request, question_id=None ):
     return redirect( 'question', question_id=question_id )
 
 
+#########################################################
+#### Mark all non-attemt Q. as skipped then redirect ####
+#########################################################
 @login_required()
+@user_passes_test( lambda user: not user.is_complete_quiz ,login_url='result' )
 def Quit( request ):
     '''After quitting all his non-attempt question will marked as skipped'''
    
@@ -186,6 +193,9 @@ def Quit( request ):
     return finish_the_game( request )
 
 
+######################################
+#### Logged-in user's result page ####
+######################################
 class ResultView( LoginRequiredMixin, CustomQuizCompleteMixin, TemplateView ):
     '''Showing the logged-in user's result page.'''
 
@@ -194,11 +204,17 @@ class ResultView( LoginRequiredMixin, CustomQuizCompleteMixin, TemplateView ):
     def get_context_data( self,**kwargs ):
         context                            = super().get_context_data( **kwargs )
         context['total_questions']         = Question.objects.total_questions
-        context['total_skipped_questions'] = Attempt.objects.total_skipped_questions( self.request.user )
+        context['total_skipped_questions'] = Attempt.objects.total_skipped_questions(\
+                                                                        self.request.user\
+                                                                                    )
         return context
 
 
+###################################################
+#### Show each question w.r.t every user's ans ####
+###################################################
 @login_required()
+@user_passes_test( lambda user: user.is_complete_quiz ,login_url='/' )
 def FullResult( request ):
     '''Combine users with question as per their answers'''
 

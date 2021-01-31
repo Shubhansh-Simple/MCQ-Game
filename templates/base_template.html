@@ -116,6 +116,10 @@
                href="{% url 'logout' %}#login_section_id" >
                Logout
             </a>
+          {% else %}
+            <p class='text-danger'>
+            <small>You are not logged in.</small>
+            </p>
           {% endif %}
 
 

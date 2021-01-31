@@ -1,13 +1,17 @@
-from django.shortcuts              import render
-from django.contrib.auth.mixins    import LoginRequiredMixin
-from django.views.generic          import ListView
-from .models                       import CustomUser,Contributor
-from .utils                        import get_plot
-from KbcProject.mixins             import CustomQuizCompleteMixin
+from django.shortcuts               import render
+from django.contrib.auth.mixins     import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required,user_passes_test
+from django.views.generic           import ListView
+from .models                        import CustomUser,Contributor
+from .utils                         import get_plot
+from KbcProject.mixins              import CustomQuizCompleteMixin
 
 
+###################################################
+#### Only my friends list not _demo & is_staff ####
+###################################################
 class UserListView( LoginRequiredMixin, CustomQuizCompleteMixin, ListView ):
-    '''All the user in database'''
+    '''Special users in database'''
 
     model               = CustomUser
     template_name       = 'user_list.html' 
@@ -17,6 +21,11 @@ class UserListView( LoginRequiredMixin, CustomQuizCompleteMixin, ListView ):
         return CustomUser.hide_special_user()
 
 
+##################################################
+#### Show only write answers couting in graph ####
+##################################################
+@login_required()
+@user_passes_test( lambda user: user.is_complete_quiz ,login_url='/' )
 def DataAnalysis( request ):
     '''Send required data to template to show the graph'''
 
@@ -34,6 +43,9 @@ def DataAnalysis( request ):
     return render( request , 'data_analysis.html', { 'chart':chart } )
        
 
+###############################################
+#### Programmers page for others to visit. ####
+###############################################
 class ContributorsListView( ListView ):
     '''List of the authors who helps me in this project'''
 
