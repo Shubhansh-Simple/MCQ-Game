@@ -103,6 +103,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <hr>
         <div class="navbar-nav ml-auto">
+
           <a class="text-muted nav-item nav-link active"
              href="{% url 'terms_condition' %}" >
             Home 
@@ -116,6 +117,9 @@
                href="{% url 'logout' %}#login_section_id" >
                Logout
             </a>
+            <div class='text-center text-secondary'>
+              <p>Hello,{{ user.username|title }}</p>
+            </div>
           {% else %}
             <p class='text-danger'>
             <small>You are not logged in.</small>

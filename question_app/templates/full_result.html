@@ -45,7 +45,7 @@
 
       <!--HEADING of the table-->
       <thead class='whiskey-table'>
-        <th class='text-center text-white'>Questions</th>
+        <th class='text-center text-white' style='vertical-align:middle'>Questions</th>
         <th class='text-success'>
           <img src="{% static 'admin/img/icon-yes.svg' %}"
                alt='Right'
@@ -132,6 +132,13 @@
 
         </tr>
       {% endfor %}
+      <tr>
+        <td colspan=4>
+          <a class='btn btn-dark text-white' href="{% url 'user_list' %}">
+            &nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;
+          </a>
+        </td>
+      </tr>
     </table>
   </div>
 {% endblock body_block %}
