@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     # local
     'users.apps.UsersConfig',
     'question_app.apps.QuestionAppConfig',
-    'custom_error_app.apps.CustomErrorAppConfig',
 ]
 
 MIDDLEWARE = [

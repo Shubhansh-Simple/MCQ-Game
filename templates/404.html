@@ -1,24 +1,36 @@
-{% extends 'base_template.html' %}    
+
+{% extends 'base_template.html' %}
 
 <!-- Title -->
 {% block title %}
   404 :(
 {% endblock %}
 
+{% block whiskey %}
+{% endblock %}
+
 {% block profile %}
 {% endblock profile %}
 
 <!-- body -->
-{% block body %}
+{% block body_block %}
   {% load staticfiles %}
   <div class='text-center'>
-    <img class="rounded-circle" src="{% static '404_page_image.png' %}" alt="Project Image" width="240" height="240"> 
+    <img class="rounded-circle" src="{% static '404_page_image.png' %}" alt="Project Image" width="240" height="240">
     <h1>Page Not Found</h1>
     <p>Requested url <b>not found</b> in our site</p>
-  </div>
-{% endblock body %}
 
-{% endblock %}
+    <a class='btn btn-primary text-white' href="{% url 'terms_condition' %}">Back To Home Page</a>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+{% endblock body_block %}
+
 
 
 

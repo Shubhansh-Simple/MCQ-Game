@@ -13,8 +13,8 @@ function removeKey(){
     localStorage.setItem( 'question_id_key', current_question_id )
     localStorage.setItem( 'timer_value_key', 30 )
   } catch ( e ) {
-    // do sometihng here if it's fail
-    // redirect to the error page.
+      window.location.href='https://shubhansh.pythonanywhere.com/'
+      alert('.) Try again with different browser\n.) Close incognito mode then try again.' )
   }
 }
 

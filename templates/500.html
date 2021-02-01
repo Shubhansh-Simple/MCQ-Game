@@ -1,4 +1,5 @@
-{% extends 'base_template.html' %}    
+
+{% extends 'base_template.html' %}
 
 <!-- Title -->
 {% block title %}
@@ -6,19 +7,29 @@
 {% endblock %}
 
 {% block whiskey %}
-{% endblock whiskey %}
+{% endblock %}
 
 {% block profile %}
 {% endblock profile %}
 
+<!-- body -->
 {% block body_block %}
   {% load staticfiles %}
-  <div class="text-center">
-    <img class="rounded-circle" src="{% static '500_page_image.jpg' %}" alt="Error" width="240" height="240"> 
-    <h1>Server Error</h1>
+  <div class='text-center'>
+    <img class="rounded-circle" src="{% static '500_page_image.jpg' %}" alt="Project Image" width="240" height="240">
+    <h1>Something Bad Happen</h1>
+
+    <a class='btn btn-primary text-white' href="{% url 'terms_condition' %}">Back To Home Page</a>
   </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
 
 {% endblock body_block %}
+
 
 
 

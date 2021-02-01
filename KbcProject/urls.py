@@ -15,5 +15,6 @@ urlpatterns = [
    # for accessing media file urls.
 ]+ static( settings.MEDIA_URL , document_root=settings.MEDIA_ROOT )
 
-
+handler404 = 'users.views.error_404_view' #new 
+handler500 = 'users.views.error_500_view' #new 
 
