@@ -66,11 +66,13 @@
   {% if messages %}
     <div class=" text-center messages">
         {% for message in messages %}
-        	<p  {% if message.tags %} 
-              class="bg-{{ message.tags }} text-dark" 
-              {% endif %}> 
-              {{ message }}
-            </p>
+            <h4>
+              <span  {% if message.tags %} 
+                class="badge badge-pill badge-{{ message.tags }} text-white" 
+                {% endif %}> 
+                {{ message }}
+              </span>
+            </h4>
         {% endfor %}
     </div>
     <br>
@@ -99,7 +101,7 @@
     <br>
     Passing Marks - {{ passing_pushes }}
   </p>
-  <b id='timer_count' class='rounded-circle bg-dark text-success display-4'></b>
+  <span id='timer_count' style='padding:10px' class='rounded-circle bg-danger text-white display-4'>?</span>
 {% endblock additional_text %}
 
 {% block body_block %}

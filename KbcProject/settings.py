@@ -34,16 +34,17 @@ ALLOWED_HOSTS = [ 'localhost','192.168.43.98' ]
 
 INSTALLED_APPS = [
 
-    # local
-    'users.apps.UsersConfig',
-    'question_app.apps.QuestionAppConfig',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # local
+    'users.apps.UsersConfig',
+    'question_app.apps.QuestionAppConfig',
+    'custom_error_app.apps.CustomErrorAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,8 @@ USE_L10N = True
 USE_TZ = True
 
 MESSAGE_TAGS = {
-    messages.ERROR : 'danger',
+    messages.ERROR   : 'danger',
+    messages.WARNING : 'dark' ,
 }
 
 
